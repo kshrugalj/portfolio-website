@@ -16,28 +16,32 @@ const ExperienceEducation: React.FC = () => {
             company: 'Aitheria',
             period: 'Jan 2026 - Present',
             description: 'Developing Full Stack Applications.',
-            logo: aitheriaLogo
+            logo: aitheriaLogo,
+            link: undefined
         },
         {
             title: 'Frontend Developer Intern',
             company: 'Velric',
             period: 'Sep 2025 - Dec 2025',
             description: 'Helped build the company website, including Home and Contact pages, using Next.js, TypeScript, and Tailwind. Focused on server-side rendering and type safety.',
-            logo: velricLogo
+            logo: velricLogo,
+            link: 'https://velric.ai/'
         },
         {
             title: 'Software Engineer Intern',
             company: 'WayPave',
             period: 'Jun 2025 - Aug 2025',
             description: 'Built a full-stack hiring analytics platform with a Firebase backend and Vue.js/Tailwind frontend, providing real-time recruitment insights and leveraging analytics to guide product strategy.',
-            logo: waypaveLogo
+            logo: waypaveLogo,
+            link: 'https://waypave.com/'
         },
         {
             title: 'Information Security Intern',
             company: 'Arvest Bank',
             period: 'Jan 2025 - May 2025',
             description: 'Led the development of a company-wide ransomware training program, creating an interactive JavaScript/HTML/CSS game integrated with the LMS to simplify cybersecurity concepts and boost risk awareness.',
-            logo: arvestLogo
+            logo: arvestLogo,
+            link: 'https://www.arvest.com/'
         }
     ];
 
@@ -47,21 +51,24 @@ const ExperienceEducation: React.FC = () => {
             school: 'Ignite Professional Studies',
             period: 'Aug 2025 - Present',
             description: 'Yin and Yang Sensory Room, The Hawk-Eye System (@Zebra Technologies), Cybersecurity Research (@OBU), Traffic Optimization (@Bentonville Traffic Unit)',
-            logo: igniteLogo
+            logo: igniteLogo,
+            link: 'https://www.bentonvillek12.org/o/ignite'
         },
         {
             degree: 'Ignite Technology Student (Year 1)',
             school: 'Ignite Professional Studies',
             period: 'Aug 2024 - May 2025',
             description: 'Flow (Kayaking VR experience @Crystal Bridges), NurseAI (Curiosity Gauntlet), OCR PDF development (LexMed), Multilingual chatbot (@Arvest Hackathon, 1st place)',
-            logo: igniteLogo
+            logo: igniteLogo,
+            link: 'https://www.bentonvillek12.org/o/ignite'
         },
         {
             degree: 'High School Diploma',
             school: 'Bentonville West High School',
             period: 'Aug 2022 - Present',
             description: 'Grade: 12th \n Activities and societies: Varsity Tennis, Key Club, Programming Club (Vice President), Mu Alpha Theta, Varsity Quiz Bowl, NHS, DECA',
-            logo: wolverineLogo
+            logo: wolverineLogo,
+            link: 'https://www.bentonvillek12.org/o/bwhs'
         }
     ];
 
@@ -96,7 +103,15 @@ const ExperienceEducation: React.FC = () => {
                                 </div>
                                         <div className="timeline-content">
                                             <h3>{exp.title}</h3>
-                                            <h4>{exp.company}</h4>
+                                            {exp.link ? (
+                                                <h4>
+                                                    <a href={exp.link} target="_blank" rel="noopener noreferrer" className="company-link">
+                                                        {exp.company}
+                                                    </a>
+                                                </h4>
+                                            ) : (
+                                                <h4>{exp.company}</h4>
+                                            )}
                                             <span className="period">{exp.period}</span>
                                             <p>{exp.description}</p>
                                         </div>
@@ -114,7 +129,15 @@ const ExperienceEducation: React.FC = () => {
                                 </div>
                                         <div className="timeline-content">
                                             <h3>{edu.degree}</h3>
-                                            <h4>{edu.school}</h4>
+                                            {edu.link ? (
+                                                <h4>
+                                                    <a href={edu.link} target="_blank" rel="noopener noreferrer" className="company-link">
+                                                        {edu.school}
+                                                    </a>
+                                                </h4>
+                                            ) : (
+                                                <h4>{edu.school}</h4>
+                                            )}
                                             <span className="period">{edu.period}</span>
                                             <p>{edu.description}</p>
                                         </div>

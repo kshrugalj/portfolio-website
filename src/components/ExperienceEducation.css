@@ -121,6 +121,18 @@
     font-weight: 500;
 }
 
+.company-link {
+    color: #60A5FA;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.company-link:hover {
+    color: #93C5FD;
+    text-decoration: underline;
+}
+
 .period {
     display: inline-block;
     background: #1E293B;
