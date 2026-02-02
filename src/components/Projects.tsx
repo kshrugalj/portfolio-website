@@ -4,6 +4,13 @@ import './Projects.css';
 
 const projects = [
     {
+        title: 'DocOps Copilot',
+        award: 'Built @ DVHacks 2026',
+        description: 'A document processing system that transforms unstructured documents into actionable outputs. Classifies document types, highlights potential risks, identifies missing information, and suggests next steps to support enterprise teams in document review workflows.',
+        tags: ['AI', 'Groq', 'Llama', 'Next.js', 'Node.js', 'PostgreSQL', 'Prisma', 'PyTesseract', 'Python', 'shadcn/ui', 'Tailwind CSS', 'TypeScript'],
+        links: { video: 'https://www.youtube.com/watch?v=p2Ez1fy5kvg', source: 'https://github.com/kshrugalj/DVHacks', devpost: 'https://devpost.com/software/docops-copilot' },
+    },
+    {
         title: 'AdmitX',
         award: 'Qualifier @ NexHacks 2026',
         description: 'An AI-driven college advising platform built at NexHacks, a highly selective 24-hour hackathon at Carnegie Mellon University, bringing together ~800 top student hackers from a pool of 7,000+ applicants worldwide.',
