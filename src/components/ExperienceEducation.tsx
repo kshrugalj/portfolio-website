@@ -12,10 +12,10 @@ const ExperienceEducation: React.FC = () => {
 
     const experiences = [
         {
-            title: 'Full Stack Development Intern',
+            title: 'Chief Architect',
             company: 'Aitheria',
             period: 'Jan 2026 - Present',
-            description: 'Developing Full Stack Applications.',
+            description: 'Developing Technical Systems and AI Training.',
             logo: aitheriaLogo,
             link: undefined
         },
