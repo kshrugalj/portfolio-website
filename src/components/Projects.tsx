@@ -58,7 +58,7 @@ const Projects: React.FC = () => {
                             <div className="project-links">
                                 {project.links.video && <a href={project.links.video} className="btn" target="_blank" rel="noopener noreferrer">Video Demo</a>}
                                 {project.links.website && <a href={project.links.website} className="btn" target="_blank" rel="noopener noreferrer">Website</a>}
-                                {project.links.source && <a href={project.links.source} className="btn" target="_blank" rel="noopener noreferrer">Source</a>}
+                                {project.links.source && <a href={project.links.source} className="btn" target="_blank" rel="noopener noreferrer">GitHub</a>}
                                 {project.links.devpost && <a href={project.links.devpost} className="btn" target="_blank" rel="noopener noreferrer">Devpost</a>}
                                 {project.links.article && <a href={project.links.article} className="btn" target="_blank" rel="noopener noreferrer">Article</a>}
                             </div>
