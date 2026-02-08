@@ -8,7 +8,7 @@ const projects = [
         award: 'Built @ DVHacks 2026',
         description: 'A document processing system that transforms unstructured documents into actionable outputs. Classifies document types, highlights potential risks, identifies missing information, and suggests next steps to support enterprise teams in document review workflows.',
         tags: ['AI', 'Groq', 'Llama', 'Next.js', 'Node.js', 'PostgreSQL', 'Prisma', 'PyTesseract', 'Python', 'shadcn/ui', 'Tailwind CSS', 'TypeScript'],
-        links: { video: 'https://www.youtube.com/watch?v=p2Ez1fy5kvg', source: 'https://github.com/kshrugalj/DVHacks', devpost: 'https://devpost.com/software/docops-copilot' },
+        links: { website: 'https://docops-copilot.vercel.app/', source: 'https://github.com/kshrugalj/DVHacks', devpost: 'https://devpost.com/software/docops-copilot' },
     },
     {
         title: 'AdmitX',
