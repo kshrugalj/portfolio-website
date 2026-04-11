@@ -22,7 +22,7 @@ const Hero: React.FC = () => {
                     <h2>
                         <Typewriter
                             options={{
-                                strings: ["Chief Architect at Aitheria"],
+                                strings: ["Incoming CS @ Georgia Tech | Chief Architect @ AitheriA"],
                                 autoStart: true,
                                 loop: false,
                                 deleteSpeed: Infinity,

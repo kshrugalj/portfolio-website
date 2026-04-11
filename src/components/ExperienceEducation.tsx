@@ -6,6 +6,7 @@ import arvestLogo from '../assets/arvest.png';
 import velricLogo from '../assets/velric.png';
 import waypaveLogo from '../assets/waypave.png';
 import igniteLogo from '../assets/ignite.png';
+import georgiaTechLogo from '../assets/georgia-tech.png';
 
 const ExperienceEducation: React.FC = () => {
     const [activeTab, setActiveTab] = useState<'experience' | 'education'>('experience');
@@ -46,6 +47,14 @@ const ExperienceEducation: React.FC = () => {
     ];
 
     const education = [
+        {
+            degree: 'Incoming CS Student',
+            school: 'Georgia Institute of Technology',
+            period: 'June 2026 - Present',
+            description: 'Major: Computer Science',
+            logo: georgiaTechLogo,
+            link: 'https://www.gatech.edu/'
+        },
         {
             degree: 'Ignite Technology Student (Year 2)',
             school: 'Ignite Professional Studies',
