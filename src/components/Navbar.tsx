@@ -20,8 +20,13 @@ const Navbar: React.FC = () => {
                         </a>
                     </li>
                     <li className="nav-item">
+                        <a href="#current-projects" onClick={() => scrollToSection('current-projects')} className="nav-links">
+                            current projects
+                        </a>
+                    </li>
+                    <li className="nav-item">
                         <a href="#projects" onClick={() => scrollToSection('projects')} className="nav-links">
-                            projects
+                            past projects
                         </a>
                     </li>
                     <li className="nav-item">

@@ -18,7 +18,7 @@ const ExperienceEducation: React.FC = () => {
             period: 'Jan 2026 - Present',
             description: 'Developing Technical Systems and AI Training.',
             logo: aitheriaLogo,
-            link: undefined
+            link: 'https://aitheria.io/'
         },
         {
             title: 'Frontend Developer Intern',

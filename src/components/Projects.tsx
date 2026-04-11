@@ -39,7 +39,7 @@ const Projects: React.FC = () => {
     return (
         <section id="projects" className="projects">
             <div className="projects-header">
-                <h2>Recent Projects</h2>
+                <h2>Past Projects</h2>
 
             </div>
             <div className="projects-grid">
