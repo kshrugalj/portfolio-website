@@ -3,6 +3,7 @@ import Hero from './components/Hero';
 
 import CurrentProjects from './components/CurrentProjects';
 import Projects from './components/Projects';
+import Competitions from './components/Competitions';
 import ExperienceEducation from './components/ExperienceEducation';
 import AnimatedSection from './components/AnimatedSection';
 import CustomCursor from './components/CustomCursor';
@@ -25,6 +26,13 @@ function App() {
           <Projects />
         </AnimatedSection>
       </div>
+
+      <div id="competitions">
+        <AnimatedSection>
+          <Competitions />
+        </AnimatedSection>
+      </div>
+
       <div id="experience-education">
         <AnimatedSection>
           <ExperienceEducation />

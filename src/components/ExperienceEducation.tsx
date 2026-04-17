@@ -1,5 +1,5 @@
+
 import React, { useState } from 'react';
-import './ExperienceEducation.css';
 import wolverineLogo from '../assets/wolverine.png';
 import aitheriaLogo from '../assets/aitheria.png';
 import arvestLogo from '../assets/arvest.png';
@@ -81,79 +81,57 @@ const ExperienceEducation: React.FC = () => {
         }
     ];
 
+    const items = activeTab === 'experience' ? experiences : education;
+
     return (
-        <section id="experience-education" className="experience-education">
-            <div className="container">
-                <h2>Experience & Education</h2>
+        <section id="experience-education" className="py-20 px-8 bg-background">
+            <div className="max-w-[1200px] mx-auto">
+                <h2 className="text-4xl font-bold m-0 border-b-2 border-accent pb-2 inline-block mb-12">Experience & Education</h2>
                 
-                <div className="tab-container">
-                    <div className="tab-buttons">
+                <div className="bg-[#1f1f1f] rounded-3xl p-6 md:p-12 border border-white/5">
+                    <div className="flex gap-4 mb-12 border-b border-white/10">
                         <button
-                            className={`tab-button ${activeTab === 'experience' ? 'active' : ''}`}
+                            className={`pb-4 px-4 font-bold transition-all duration-300 relative ${activeTab === 'experience' ? 'text-accent' : 'text-secondary hover:text-white'}`}
                             onClick={() => setActiveTab('experience')}
                         >
                             Experience
+                            {activeTab === 'experience' && <span className="absolute bottom-0 left-0 w-full h-1 bg-accent rounded-t-full"></span>}
                         </button>
                         <button
-                            className={`tab-button ${activeTab === 'education' ? 'active' : ''}`}
+                            className={`pb-4 px-4 font-bold transition-all duration-300 relative ${activeTab === 'education' ? 'text-accent' : 'text-secondary hover:text-white'}`}
                             onClick={() => setActiveTab('education')}
                         >
                             Education
+                            {activeTab === 'education' && <span className="absolute bottom-0 left-0 w-full h-1 bg-accent rounded-t-full"></span>}
                         </button>
                     </div>
 
-                    <div className="tab-content">
-                        {activeTab === 'experience' && (
-                            <div className="experience-list">
-                                {experiences.map((exp, index) => (
-                                    <div key={index} className="timeline-item">
-                                <div className={`timeline-marker ${exp.logo ? 'has-logo' : ''}`}>
-                                    {exp.logo && <img src={exp.logo} alt={`${exp.company} logo`} className="timeline-logo" />}
+                    <div className="relative pl-8 md:pl-12 border-l-2 border-accent/20 space-y-12">
+                        {items.map((item, index) => (
+                            <div key={index} className="relative group">
+                                <div className="absolute left-[-33px] md:left-[-49px] top-0 -translate-x-1/2 w-10 h-10 md:w-12 md:h-12 bg-[#1f1f1f] border-2 border-accent rounded-full flex items-center justify-center overflow-hidden z-10 group-hover:scale-110 transition-transform bg-white/5 backdrop-blur-sm shadow-[0_0_15px_rgba(3,218,198,0.2)]">
+                                    {(item as any).logo && <img src={(item as any).logo} alt="Logo" className="w-full h-full object-cover p-1 rounded-full" />}
                                 </div>
-                                        <div className="timeline-content">
-                                            <h3>{exp.title}</h3>
-                                            {exp.link ? (
-                                                <h4>
-                                                    <a href={exp.link} target="_blank" rel="noopener noreferrer" className="company-link">
-                                                        {exp.company}
-                                                    </a>
-                                                </h4>
+                                
+                                <div className="space-y-2">
+                                    <h3 className="text-xl md:text-2xl font-bold text-white">{(item as any).title || (item as any).degree}</h3>
+                                    <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+                                        <h4 className="text-accent font-semibold">
+                                            {(item as any).link ? (
+                                                <a href={(item as any).link} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                                                    {(item as any).company || (item as any).school}
+                                                </a>
                                             ) : (
-                                                <h4>{exp.company}</h4>
+                                                (item as any).company || (item as any).school
                                             )}
-                                            <span className="period">{exp.period}</span>
-                                            <p>{exp.description}</p>
-                                        </div>
+                                        </h4>
+                                        <span className="hidden md:block text-secondary">•</span>
+                                        <span className="text-secondary text-sm font-medium">{(item as any).period}</span>
                                     </div>
-                                ))}
-                            </div>
-                        )}
-
-                        {activeTab === 'education' && (
-                            <div className="education-list">
-                                {education.map((edu, index) => (
-                                    <div key={index} className="timeline-item">
-                                <div className={`timeline-marker ${edu.logo ? 'has-logo' : ''}`}>
-                                    {edu.logo && <img src={edu.logo} alt={`${edu.school} logo`} className="timeline-logo" />}
+                                    <p className="text-secondary leading-relaxed max-w-3xl pt-2">{(item as any).description}</p>
                                 </div>
-                                        <div className="timeline-content">
-                                            <h3>{edu.degree}</h3>
-                                            {edu.link ? (
-                                                <h4>
-                                                    <a href={edu.link} target="_blank" rel="noopener noreferrer" className="company-link">
-                                                        {edu.school}
-                                                    </a>
-                                                </h4>
-                                            ) : (
-                                                <h4>{edu.school}</h4>
-                                            )}
-                                            <span className="period">{edu.period}</span>
-                                            <p>{edu.description}</p>
-                                        </div>
-                                    </div>
-                                ))}
                             </div>
-                        )}
+                        ))}
                     </div>
                 </div>
             </div>

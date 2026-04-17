@@ -1,6 +1,5 @@
 
 import React from 'react';
-import './Projects.css';
 
 const projects = [
     {
@@ -37,30 +36,28 @@ const projects = [
 
 const Projects: React.FC = () => {
     return (
-        <section id="projects" className="projects">
-            <div className="projects-header">
-                <h2>Past Projects</h2>
-
+        <section id="projects" className="py-16 px-8 max-w-[1200px] mx-auto">
+            <div className="flex justify-between items-center mb-8">
+                <h2 className="text-4xl font-bold m-0 border-b-2 border-accent pb-2">Past Projects</h2>
             </div>
-            <div className="projects-grid">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
                 {projects.map((project, index) => (
-                    <div className="project-card" key={index}>
-
-                        <div className="project-info">
-                            <h3>{project.title}</h3>
-                            <p className="project-award">{project.award}</p>
-                            <p>{project.description}</p>
-                            <div className="project-tags">
+                    <div className="bg-surface rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border border-[#333]" key={index}>
+                        <div className="p-6 md:p-8">
+                            <h3 className="text-2xl font-bold mt-0 mb-2">{project.title}</h3>
+                            <p className="text-accent font-bold mb-4">{project.award}</p>
+                            <p className="text-secondary leading-relaxed">{project.description}</p>
+                            <div className="flex flex-wrap gap-2 my-4">
                                 {project.tags.map((tag, i) => (
-                                    <span key={i} className="tag">{tag}</span>
+                                    <span key={i} className="bg-[#333] px-3 py-1 rounded-md text-sm">{tag}</span>
                                 ))}
                             </div>
-                            <div className="project-links">
-                                {project.links.video && <a href={project.links.video} className="btn" target="_blank" rel="noopener noreferrer">Video Demo</a>}
-                                {project.links.website && <a href={project.links.website} className="btn" target="_blank" rel="noopener noreferrer">Website</a>}
-                                {project.links.source && <a href={project.links.source} className="btn" target="_blank" rel="noopener noreferrer">GitHub</a>}
-                                {project.links.devpost && <a href={project.links.devpost} className="btn" target="_blank" rel="noopener noreferrer">Devpost</a>}
-                                {project.links.article && <a href={project.links.article} className="btn" target="_blank" rel="noopener noreferrer">Article</a>}
+                            <div className="flex flex-wrap gap-4 mt-6">
+                                {project.links.video && <a href={project.links.video} className="bg-[#333] text-white px-4 py-2 rounded transition-colors hover:bg-[#444]" target="_blank" rel="noopener noreferrer">Video Demo</a>}
+                                {project.links.website && <a href={project.links.website} className="bg-[#333] text-white px-4 py-2 rounded transition-colors hover:bg-[#444]" target="_blank" rel="noopener noreferrer">Website</a>}
+                                {project.links.source && <a href={project.links.source} className="bg-[#333] text-white px-4 py-2 rounded transition-colors hover:bg-[#444]" target="_blank" rel="noopener noreferrer">GitHub</a>}
+                                {project.links.devpost && <a href={project.links.devpost} className="bg-[#333] text-white px-4 py-2 rounded transition-colors hover:bg-[#444]" target="_blank" rel="noopener noreferrer">Devpost</a>}
+                                {project.links.article && <a href={project.links.article} className="bg-[#333] text-white px-4 py-2 rounded transition-colors hover:bg-[#444]" target="_blank" rel="noopener noreferrer">Article</a>}
                             </div>
                         </div>
                     </div>
