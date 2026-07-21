@@ -1,45 +1,20 @@
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-
-import CurrentProjects from './components/CurrentProjects';
-import Projects from './components/Projects';
-import Competitions from './components/Competitions';
-import ExperienceEducation from './components/ExperienceEducation';
-import AnimatedSection from './components/AnimatedSection';
-import CustomCursor from './components/CustomCursor';
+import { useMode } from "./hooks/useMode";
+import ModeSwitcher from "./components/ModeSwitcher";
+import Terminal from "./components/Terminal/Terminal";
+import BrowseMode from "./components/Browse/BrowseMode";
 
 function App() {
-  return (
-    <div>
-      <CustomCursor />
-      <Navbar />
-      <Hero />
+  const { mode, chooseMode } = useMode();
 
-      <div id="current-projects">
-        <AnimatedSection>
-          <CurrentProjects />
-        </AnimatedSection>
-      </div>
+  if (!mode) {
+    return <ModeSwitcher onChoose={chooseMode} />;
+  }
 
-      <div id="projects">
-        <AnimatedSection>
-          <Projects />
-        </AnimatedSection>
-      </div>
+  if (mode === "terminal") {
+    return <Terminal onSwitchMode={() => chooseMode("browse")} />;
+  }
 
-      <div id="competitions">
-        <AnimatedSection>
-          <Competitions />
-        </AnimatedSection>
-      </div>
-
-      <div id="experience-education">
-        <AnimatedSection>
-          <ExperienceEducation />
-        </AnimatedSection>
-      </div>
-    </div>
-  )
+  return <BrowseMode onSwitchMode={() => chooseMode("terminal")} />;
 }
 
-export default App
+export default App;
