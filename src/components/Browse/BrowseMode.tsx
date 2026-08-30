@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { profile, stats, currentProjects, pastProjects, competitions, experiences, education } from "../../data/content";
 import StatusBadge from "../UI/StatusBadge";
 
@@ -7,6 +7,13 @@ interface BrowseModeProps {
 }
 
 const BrowseMode: React.FC<BrowseModeProps> = ({ onSwitchMode }) => {
+  const [expandedIdx, setExpandedIdx] = useState<number | null>(null);
+
+  const toggleExperience = (idx: number, hasBullets: boolean) => {
+    if (!hasBullets) return;
+    setExpandedIdx((prev) => (prev === idx ? null : idx));
+  };
+
   return (
     <div className="min-h-screen bg-term-bg">
       {/* Nav */}
@@ -104,17 +111,52 @@ const BrowseMode: React.FC<BrowseModeProps> = ({ onSwitchMode }) => {
       <section id="experience" className="py-16 px-6 border-t border-term-border">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold text-term-text mb-8 font-mono">experience</h2>
-          <div className="space-y-6 mb-12">
-            {experiences.map((e, i) => (
-              <div key={i} className="flex gap-4">
-                <span className="text-term-dim text-xs w-36 flex-shrink-0 tabular-nums pt-0.5 whitespace-nowrap">{e.period}</span>
-                <div>
-                  <div className="text-term-text font-semibold text-sm">{e.title}</div>
-                  <a href={e.link} target="_blank" rel="noopener noreferrer" className="text-term-blue hover:text-term-green text-xs transition-colors">{e.company}</a>
-                  <div className="text-term-muted text-xs mt-1">{e.description}</div>
+          <div className="space-y-3 mb-12">
+            {experiences.map((e, i) => {
+              const hasBullets = !!e.bullets?.length;
+              const isExpanded = expandedIdx === i;
+              return (
+                <div
+                  key={i}
+                  onClick={() => toggleExperience(i, hasBullets)}
+                  role={hasBullets ? "button" : undefined}
+                  tabIndex={hasBullets ? 0 : undefined}
+                  aria-expanded={hasBullets ? isExpanded : undefined}
+                  onKeyDown={(ev) => {
+                    if (hasBullets && (ev.key === "Enter" || ev.key === " ")) {
+                      ev.preventDefault();
+                      toggleExperience(i, hasBullets);
+                    }
+                  }}
+                  className={`flex gap-4 rounded-lg border p-4 transition-all ${hasBullets ? "cursor-pointer" : ""} ${isExpanded ? "bg-term-surface border-term-border-active shadow-sm" : "bg-term-surface/40 border-term-border hover:border-term-border-active hover:bg-term-surface group"}`}
+                >
+                  <span className="text-term-dim text-xs w-36 flex-shrink-0 tabular-nums pt-1 whitespace-nowrap">{e.period}</span>
+                  <div className="flex-1 min-w-0 space-y-1">
+                    <div className="flex items-center gap-2">
+                      <div className={`font-semibold text-sm transition-colors ${isExpanded ? "text-term-green" : "text-term-text group-hover:text-term-green"}`}>{e.title}</div>
+                      {hasBullets && (
+                        <span className={`inline-flex items-center justify-center w-5 h-5 rounded text-[10px] leading-none border transition-all duration-200 ${isExpanded ? "bg-term-green text-term-bg border-term-green rotate-90" : "bg-term-bg text-term-dim border-term-border group-hover:text-term-green group-hover:border-term-green/50"}`}>▸</span>
+                      )}
+                    </div>
+                    <a href={e.link} target="_blank" rel="noopener noreferrer" onClick={(ev) => ev.stopPropagation()} className="text-term-blue hover:text-term-green text-xs transition-colors inline-block">
+                      {e.company}
+                    </a>
+                    <div className="text-term-muted text-xs mt-1 leading-relaxed">{e.description}</div>
+                    {hasBullets && !isExpanded && <div className="text-[10px] font-mono text-term-dim group-hover:text-term-muted pt-1">click to expand ▾</div>}
+                    {hasBullets && isExpanded && (
+                      <ul className="mt-3 space-y-2 border-t border-term-border pt-3">
+                        {e.bullets!.map((b, bi) => (
+                          <li key={bi} className="flex gap-2.5 text-xs leading-relaxed text-term-muted text-left">
+                            <span className="text-term-green mt-1.5 flex-shrink-0 w-1 h-1 rounded-full bg-term-green" />
+                            <span>{b}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <h2 className="text-2xl font-bold text-term-text mb-8 font-mono">education</h2>

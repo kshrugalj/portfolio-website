@@ -5,7 +5,7 @@ export const profile = {
   linkedin: "https://www.linkedin.com/in/kshrugalj/",
   resumeUrl: "/resume.pdf",
   tagline: "Building technical systems that scale",
-  role: "Software Engineer @ Nexor Technologies",
+  role: "Software Engineer (Contract) @ Nexor Technologies",
   education: "CS @ Georgia Tech",
 };
 
@@ -134,14 +134,79 @@ export interface Experience {
   period: string;
   description: string;
   link: string;
+  bullets?: string[];
 }
 
 export const experiences: Experience[] = [
-  { title: "Software Engineer", company: "Nexor Technologies", period: "Jun 2026 — Present", description: "Full-stack ownership across 4 production products — 150+ commits spanning auth, API, UI, deployment, and security.", link: "#" },
-  { title: "Chief Architect", company: "Aitheria", period: "Jan 2026 — May 2026", description: "Developing Technical Systems and AI Training.", link: "https://aitheria.io/" },
-  { title: "Frontend Developer Intern", company: "Velric", period: "Sep 2025 — Dec 2025", description: "Helped build the company website using Next.js, TypeScript, and Tailwind.", link: "https://velric.ai/" },
-  { title: "Software Engineer Intern", company: "WayPave", period: "Jun 2025 — Aug 2025", description: "Built a full-stack hiring analytics platform with Firebase and Vue.js/Tailwind.", link: "https://waypave.com/" },
-  { title: "Information Security Intern", company: "Arvest Bank", period: "Jan 2025 — May 2025", description: "Led development of company-wide ransomware training program.", link: "https://www.arvest.com/" },
+  {
+    title: "Software Engineer (Contract)",
+    company: "Nexor Technologies",
+    period: "Jun 2026 — Aug 2026",
+    description: "Full-stack contract — Next.js, React, TypeScript, Python, FastAPI",
+    link: "#",
+    bullets: [
+      "Built and shipped full-stack features using Next.js, React, TypeScript, Python, and FastAPI, translating product requirements into responsive user interfaces and reliable backend services.",
+      "Integrated REST APIs and database-backed workflows to support scalable application functionality, improve data flow between services, and streamline user interactions.",
+      "Contributed to debugging, testing, and code reviews across a modern web stack, helping improve application reliability, maintainability, and deployment readiness.",
+      "Collaborated with engineers to deliver secure, production-quality solutions while following best practices for version control, iterative development, and performance optimization.",
+    ],
+  },
+  {
+    title: "Software Engineer Intern",
+    company: "Aitheria",
+    period: "Jan 2026 — May 2026",
+    description: "Crowdfunding & landing platform — Next.js, TypeScript, Tailwind, Resend, Vercel",
+    link: "https://aitheria.io/",
+    bullets: [
+      "Built a full-stack crowdfunding and landing platform using Next.js, TypeScript, and Tailwind CSS to support a music-tech startup.",
+      "Engineered a modular architecture with custom CSS animations and a soundbar visualizer for an immersive user experience.",
+      "Integrated the Resend API to automate secure contact form processing and streamline lead management.",
+      "Achieved seamless delivery and high performance by optimizing CI/CD pipelines through Vercel.",
+      "Developed multi-phase intro transitions to enhance brand storytelling and user engagement.",
+    ],
+  },
+  {
+    title: "Frontend Developer Intern",
+    company: "Velric",
+    period: "Sep 2025 — Nov 2025",
+    description: "Core website pages — Next.js, TypeScript, Tailwind, SSR",
+    link: "https://velric.ai/",
+    bullets: [
+      "Implementation of Next.js, TypeScript, and Tailwind CSS to build core company website pages.",
+      "Development of Home and Contact pages with a focus on clean UI and responsive design.",
+      "Utilized server-side rendering (SSR) to improve performance and SEO.",
+      "Emphasized type safety and maintainable component architecture.",
+      "Collaborated with the team to align frontend implementation with branding and product goals.",
+    ],
+  },
+  {
+    title: "Software Engineer Intern",
+    company: "WayPave",
+    period: "Jun 2025 — Aug 2025",
+    description: "Hiring analytics platform — Firebase, Vue.js, Tailwind",
+    link: "https://waypave.com/",
+    bullets: [
+      "Built a full-stack hiring analytics platform to surface real-time recruitment insights.",
+      "Implemented a Firebase backend for authentication, data storage, and live updates.",
+      "Developed a responsive Vue.js + Tailwind CSS frontend for clear data visualization.",
+      "Enabled real-time analytics dashboards to track hiring metrics and trends.",
+      "Leveraged data-driven insights to help guide product and strategy decisions.",
+    ],
+  },
+  {
+    title: "Information Security Intern",
+    company: "Arvest Bank",
+    period: "Jan 2025 — May 2025",
+    description: "Ransomware training program — JavaScript, HTML/CSS, LMS",
+    link: "https://www.arvest.com/",
+    bullets: [
+      "Led the development of a company-wide ransomware training program to improve cybersecurity awareness.",
+      "Built an interactive JavaScript/HTML/CSS game to simplify complex security concepts.",
+      "Integrated the training experience with the company Learning Management System (LMS).",
+      "Designed engaging scenarios to help employees identify and respond to ransomware threats.",
+      "Increased accessibility and retention of cybersecurity best practices across teams.",
+    ],
+  },
 ];
 
 export interface Education {
