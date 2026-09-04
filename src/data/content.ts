@@ -6,12 +6,12 @@ export const profile = {
   resumeUrl: "/resume.pdf",
   tagline: "Building technical systems that scale",
   role: "Software Engineer (Contract) @ Nexor Technologies",
-  education: "CS @ Georgia Tech",
+  education: "B.S. Computer Science @ Georgia Tech — GPA 4.00/4.00",
 };
 
 export const stats = {
   competitions: 10,
-  projects: 6,
+  projects: 7,
   experiences: 5,
 };
 
@@ -27,6 +27,24 @@ export interface Project {
 
 export const currentProjects: Project[] = [
   {
+    id: "careeros",
+    title: "CareerOS",
+    status: "active",
+    description:
+      "AI job discovery platform across 111+ ATS boards with resume-to-role matching and one-click cover letter generation. Built with FastAPI, async httpx, Groq LLM and Firebase — 32–38s query time, zero rate-limit errors.",
+    tags: ["Python", "FastAPI", "Next.js 16", "React 19", "TypeScript", "Firebase", "Groq LLM", "Pydantic v2"],
+    links: [],
+  },
+  {
+    id: "vibetexting",
+    title: "VibeTexting",
+    status: "active",
+    description:
+      "100% local AI messaging assistant for 50+ iMessage threads — zero cloud API calls, 5-second polling. Python CLI with SQLite parsing, AppleScript delivery, few-shot vibe mimicry from 150+ messages, plus semantic memory with ChromaDB + LLaVA vision.",
+    tags: ["Python", "FastAPI", "React", "ChromaDB", "Ollama", "SQLite", "AppleScript", "LLaVA", "Tailwind CSS"],
+    links: [],
+  },
+  {
     id: "recall",
     title: "Recall",
     status: "active",
@@ -37,15 +55,6 @@ export const currentProjects: Project[] = [
       { label: "Instagram", url: "https://www.instagram.com/playrecall/" },
       { label: "LinkedIn", url: "https://www.linkedin.com/company/playrecall/" },
     ],
-  },
-  {
-    id: "vibetexting",
-    title: "VibeTexting",
-    status: "active",
-    description:
-      "Adding emotional depth to digital communication. Real-time sentiment analysis provides visual feedback to ensure your messages carry the weight they deserve.",
-    tags: ["Python", "FastAPI", "React 19", "TypeScript", "Vite", "Tailwind CSS", "ChromaDB", "Ollama", "SQLite"],
-    links: [],
   },
 ];
 
@@ -142,69 +151,56 @@ export const experiences: Experience[] = [
     title: "Software Engineer (Contract)",
     company: "Nexor Technologies",
     period: "Jun 2026 — Aug 2026",
-    description: "Full-stack contract — Next.js, React, TypeScript, Python, FastAPI",
+    description: "AI-powered document extraction & property transcription — TypeScript, Next.js, PostgreSQL, Claude, Azure Blob Storage",
     link: "#",
     bullets: [
-      "Built and shipped full-stack features using Next.js, React, TypeScript, Python, and FastAPI, translating product requirements into responsive user interfaces and reliable backend services.",
-      "Integrated REST APIs and database-backed workflows to support scalable application functionality, improve data flow between services, and streamline user interactions.",
-      "Contributed to debugging, testing, and code reviews across a modern web stack, helping improve application reliability, maintainability, and deployment readiness.",
-      "Collaborated with engineers to deliver secure, production-quality solutions while following best practices for version control, iterative development, and performance optimization.",
+      "Cut trust intake from 1-2 hours of manual retyping to 5 minutes by developing AI-powered document extraction with TypeScript, Next.js, PostgreSQL and Anthropic Claude to convert trust documents into structured data for attorney review",
+      "Automated property statement transcription across 12 financial categories, building an email ingestion pipeline with TypeScript, Claude structured outputs, Resend web hooks, and Azure Blob Storage that converts 10–20 line items from PDF/image attachments into reviewable ledger entries",
     ],
   },
   {
     title: "Software Engineer Intern",
-    company: "Aitheria",
+    company: "AitheriA",
     period: "Jan 2026 — May 2026",
-    description: "Crowdfunding & landing platform — Next.js, TypeScript, Tailwind, Resend, Vercel",
+    description: "Production web platform for AI music startup — Next.js 16, React 19, TypeScript, Tailwind CSS, Resend, Vercel",
     link: "https://aitheria.io/",
     bullets: [
-      "Built a full-stack crowdfunding and landing platform using Next.js, TypeScript, and Tailwind CSS to support a music-tech startup.",
-      "Engineered a modular architecture with custom CSS animations and a soundbar visualizer for an immersive user experience.",
-      "Integrated the Resend API to automate secure contact form processing and streamline lead management.",
-      "Achieved seamless delivery and high performance by optimizing CI/CD pipelines through Vercel.",
-      "Developed multi-phase intro transitions to enhance brand storytelling and user engagement.",
+      "Developed a production web platform for an AI music startup as technical lead on a 2-person team, delivering a 4-route, 7-section interactive experience using Next.js 16, React 19, TypeScript, and Tailwind CSS",
+      "Deployed and launched the platform through Vercel with the company's custom domain, connecting the GitHub codebase and DNS to production while building the contact and lead-capture system with Next.js API routes, TypeScript, and Resend",
+      "Presented AitheriA's platform and technical vision at 3+ entrepreneurial events, communicating product capabilities and business strategy to prospective partners, investors, and startup audiences",
     ],
   },
   {
-    title: "Frontend Developer Intern",
-    company: "Velric",
+    title: "Front-End Development Intern",
+    company: "Velric.ai",
     period: "Sep 2025 — Nov 2025",
-    description: "Core website pages — Next.js, TypeScript, Tailwind, SSR",
+    description: "Core company web pages — Next.js, TypeScript, Tailwind CSS, SSR, Lighthouse 89/96/100/100",
     link: "https://velric.ai/",
     bullets: [
-      "Implementation of Next.js, TypeScript, and Tailwind CSS to build core company website pages.",
-      "Development of Home and Contact pages with a focus on clean UI and responsive design.",
-      "Utilized server-side rendering (SSR) to improve performance and SEO.",
-      "Emphasized type safety and maintainable component architecture.",
-      "Collaborated with the team to align frontend implementation with branding and product goals.",
+      "Developed 2 core company web pages, using Next.js, TypeScript, and Tailwind CSS to build responsive, type-safe Home and Contact experiences with reusable component architecture",
+      "Delivered a web platform scoring 89 Performance, 96 Accessibility, 100 Best Practices, and 100 SEO in desktop Lighthouse testing by implementing Next.js server-side rendering (SSR) and optimizing initial page delivery",
     ],
   },
   {
     title: "Software Engineer Intern",
     company: "WayPave",
     period: "Jun 2025 — Aug 2025",
-    description: "Hiring analytics platform — Firebase, Vue.js, Tailwind",
+    description: "Real-time hiring analytics platform across 15+ restaurants — Vue.js, Tailwind CSS, Firebase",
     link: "https://waypave.com/",
     bullets: [
-      "Built a full-stack hiring analytics platform to surface real-time recruitment insights.",
-      "Implemented a Firebase backend for authentication, data storage, and live updates.",
-      "Developed a responsive Vue.js + Tailwind CSS frontend for clear data visualization.",
-      "Enabled real-time analytics dashboards to track hiring metrics and trends.",
-      "Leveraged data-driven insights to help guide product and strategy decisions.",
+      "Built a real-time hiring analytics platform across 15+ restaurants, tracking interview-to-full-time conversion using Vue.js, Tailwind CSS, Firebase Authentication, and Firestore to surface actionable recruitment insights",
+      "Developed live dashboards for 2 key hiring stages—interviews and full-time placements, implementing Firebase real-time updates to monitor restaurant-level conversion trends and support data-driven staffing decisions",
     ],
   },
   {
     title: "Information Security Intern",
     company: "Arvest Bank",
     period: "Jan 2025 — May 2025",
-    description: "Ransomware training program — JavaScript, HTML/CSS, LMS",
+    description: "Ransomware preparedness for 6,000+ employees — JavaScript, HTML, CSS, LMS",
     link: "https://www.arvest.com/",
     bullets: [
-      "Led the development of a company-wide ransomware training program to improve cybersecurity awareness.",
-      "Built an interactive JavaScript/HTML/CSS game to simplify complex security concepts.",
-      "Integrated the training experience with the company Learning Management System (LMS).",
-      "Designed engaging scenarios to help employees identify and respond to ransomware threats.",
-      "Increased accessibility and retention of cybersecurity best practices across teams.",
+      "Strengthened ransomware preparedness for 6,000+ employees by developing a mandatory, company-wide training program with interactive threat scenarios and a JavaScript, HTML, and CSS cybersecurity game integrated into the corporate LMS",
+      "Presented the ransomware training initiative to the CISO and senior leadership, demonstrating the interactive training experience and explaining its approach to improving employee threat identification and incident response",
     ],
   },
 ];
@@ -218,7 +214,7 @@ export interface Education {
 }
 
 export const education: Education[] = [
-  { degree: "CS Student", school: "Georgia Institute of Technology", period: "Aug 2026 — Present", description: "Major: Computer Science", link: "https://www.gatech.edu/" },
+  { degree: "B.S. in Computer Science, Threads: Intelligence and Systems & Architecture", school: "Georgia Institute of Technology", period: "May 2029", description: "GPA: 4.00/4.00 · Relevant Coursework: Intro to Computing, Object-Oriented Programming, Linear Algebra, Physics · Clubs: GT HackerHouse", link: "https://www.gatech.edu/" },
   { degree: "S2 Resident", school: "GT Hackerhouse", period: "Aug 2026 — Present", description: "S2 Resident at GT Hackerhouse", link: "https://hackerhousecampus.com/" },
   { degree: "Ignite Technology Student (Year 2)", school: "Ignite Professional Studies", period: "Aug 2025 — May 2026", description: "Yin and Yang Sensory Room, Hawk-Eye System, Cybersecurity Research, Traffic Optimization", link: "https://www.bentonvillek12.org/o/ignite" },
   { degree: "Ignite Technology Student (Year 1)", school: "Ignite Professional Studies", period: "Aug 2024 — May 2025", description: "Flow (Kayaking VR), NurseAI, OCR PDF development, Multilingual chatbot", link: "https://www.bentonvillek12.org/o/ignite" },
