@@ -262,16 +262,16 @@ const BrowseMode: React.FC = () => {
         </div>
       </motion.section>
 
-      {/* ─── SELECTED PROJECTS — diptych, titles fully visible (rows auto-height) ─── */}
+      {/* ─── SELECTED PROJECTS — diptych compact, fits one viewport, titles single-line ─── */}
       <motion.section
         id="projects"
         initial={{ y: 80, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-20 bg-white border-b-[3px] border-black min-h-[100dvh] flex flex-col justify-center py-8 lg:py-12"
+        className="relative z-20 bg-white border-b-[3px] border-black h-[100dvh] min-h-[100dvh] flex flex-col justify-center overflow-hidden py-0"
       >
-        <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-6 lg:py-8 w-full">
+        <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-4 lg:py-5 w-full flex flex-col flex-1 min-h-0 justify-center">
           <div className="flex flex-wrap items-end justify-between gap-3 border-b-[3px] border-black pb-2">
             <div className="flex items-baseline gap-3">
               <span className="font-mono text-[10px] tracking-[0.18em] uppercase opacity-40">02 — Works</span>
@@ -289,8 +289,8 @@ const BrowseMode: React.FC = () => {
             </a>
           </div>
 
-          {/* SPLIT DIPTYCH — rows auto-height so titles never clip */}
-          <div className="border-[3px] border-black flex flex-col divide-y-[3px] divide-black">
+          {/* SPLIT DIPTYCH — flex-1 rows, tight so 5 fit in viewport */}
+          <div className="border-[3px] border-black flex flex-col flex-1 min-h-0 divide-y-[3px] divide-black overflow-hidden">
             {[...currentProjects, ...pastProjects].map((p, idx) => {
               const isReverse = idx % 2 === 1;
               const isDarkCover = idx % 2 === 0;
@@ -298,20 +298,20 @@ const BrowseMode: React.FC = () => {
               return (
                 <div
                   key={p.id}
-                  className={["group flex min-h-[132px] lg:min-h-[148px]", isReverse ? "flex-row-reverse" : "flex-row", "hover:bg-black hover:text-white transition-colors"].join(" ")}
+                  className={["group flex flex-1 min-h-0", isReverse ? "flex-row-reverse" : "flex-row", "hover:bg-black hover:text-white transition-colors"].join(" ")}
                 >
-                  {/* TEXT SIDE — 7/12 — titles fully visible, no truncate */}
-                  <div className="flex-[7] min-w-0 p-3 lg:p-4 flex flex-col justify-center gap-1 border-black group-hover:border-white/15">
-                    <div className="flex items-center gap-2">
-                      <span className="font-display text-[14px] leading-none opacity-15 group-hover:opacity-100">0{idx + 1}</span>
-                      <span className="font-mono text-[8px] tracking-[0.16em] uppercase border border-black px-1 py-0.5 leading-none group-hover:border-white group-hover:text-white">
+                  {/* TEXT SIDE — 7/12 — tight so titles fit in flex-1 rows */}
+                  <div className="flex-[7] min-w-0 p-2 lg:p-3 flex flex-col justify-center gap-0.5 border-black group-hover:border-white/15">
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-display text-[12px] lg:text-[13px] leading-none opacity-20 group-hover:opacity-100">0{idx + 1}</span>
+                      <span className="font-mono text-[7px] tracking-[0.16em] uppercase border border-black px-1 py-0.5 leading-none group-hover:border-white group-hover:text-white">
                         {idx < currentProjects.length ? "● Active" : "◆ Archive"}
                       </span>
-                      <span className="hidden sm:inline font-mono text-[8px] tracking-[0.12em] uppercase opacity-40 group-hover:text-white/50">— {p.id}</span>
+                      <span className="hidden sm:inline font-mono text-[7px] tracking-[0.12em] uppercase opacity-40 group-hover:text-white/50">— {p.id}</span>
                     </div>
-                    <h3 className="font-display uppercase leading-[0.95] tracking-[-0.02em] text-[17px] lg:text-[20px] xl:text-[22px] group-hover:text-white break-words line-clamp-2">{p.title}</h3>
-                    <div className="font-mono text-[8px] lg:text-[9px] tracking-[0.12em] uppercase opacity-50 group-hover:text-white/60 line-clamp-1">{p.award ?? (idx < currentProjects.length ? "Active build — in production" : "Completed")}</div>
-                    <p className="font-sans text-[11px] lg:text-[12px] leading-[1.4] opacity-60 group-hover:text-white/70 line-clamp-1 hidden sm:block max-w-[60ch]">{p.description}</p>
+                    <h3 className="font-display uppercase leading-none tracking-[-0.02em] text-[15px] lg:text-[17px] xl:text-[18px] group-hover:text-white truncate">{p.title}</h3>
+                    <div className="font-mono text-[7px] lg:text-[8px] tracking-[0.12em] uppercase opacity-50 group-hover:text-white/60 truncate">{p.award ?? (idx < currentProjects.length ? "Active build — in production" : "Completed")}</div>
+                    <p className="font-sans text-[10px] lg:text-[11px] leading-[1.35] opacity-55 group-hover:text-white/70 truncate hidden lg:block max-w-[58ch]">{p.description}</p>
                     <div className="flex items-center justify-between gap-2 pt-1">
                       <div className="flex flex-wrap gap-1">
                         {p.tags.slice(0, 4).map((t) => (
