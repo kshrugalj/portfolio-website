@@ -11,7 +11,7 @@ export const profile = {
 
 export const stats = {
   competitions: 10,
-  projects: 6,
+  projects: 5,
   experiences: 5,
 };
 
@@ -71,18 +71,6 @@ export const pastProjects: Project[] = [
       { label: "Website", url: "https://www.admitx.tech/" },
       { label: "GitHub", url: "https://github.com/kshrugalj/AdmitX" },
       { label: "Devpost", url: "https://devpost.com/software/admitx-phb81q" },
-    ],
-  },
-  {
-    id: "oralscan",
-    title: "OralScan",
-    status: "completed",
-    award: "2nd Place — Congressional App Challenge 2025",
-    description:
-      "An AI-powered mobile application designed to detect early signs of oral cancer through image analysis.",
-    tags: ["Flutter", "Dart", "Figma", "AWS", "Docker", "Python", "FastAPI", "TensorFlow", "OpenCV"],
-    links: [
-      { label: "Video", url: "https://www.youtube.com/watch?v=QshasNCWGik" },
     ],
   },
   {

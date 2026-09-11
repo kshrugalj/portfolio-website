@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { profile, currentProjects, pastProjects, experiences, education } from "../../data/content";
+import { profile, stats, currentProjects, pastProjects, experiences, education } from "../../data/content";
 
 const BrowseMode: React.FC = () => {
   const [expandedIdx, setExpandedIdx] = useState<number | null>(0);
@@ -51,8 +51,7 @@ const BrowseMode: React.FC = () => {
     };
   }, [showIntro]);
 
-  // Select 3 featured projects — Recall replaces DocOps
-  const featured = [...currentProjects.slice(0, 3)];
+  const totalProjects = currentProjects.length + pastProjects.length;
 
   return (
     <div className="min-h-screen bg-white text-black selection:bg-black selection:text-white">
@@ -212,26 +211,26 @@ const BrowseMode: React.FC = () => {
                   </p>
                   <span className="w-7 h-7 rounded-full border-[1.5px] border-white/25 flex items-center justify-center text-[10px] text-white">✦</span>
                 </div>
-                {/* Cell 2 — 10+ */}
+                {/* Cell 2 — competitions */}
                 <div className="bg-black aspect-square p-3 xl:p-4 flex flex-col justify-center text-right">
-                  <div className="font-display text-[30px] xl:text-[34px] leading-[0.85] tracking-[-0.03em] text-white">10<span className="text-white/40">+</span></div>
+                  <div className="font-display text-[30px] xl:text-[34px] leading-[0.85] tracking-[-0.03em] text-white">{stats.competitions}<span className="text-white/40">+</span></div>
                   <div className="font-mono text-[9px] xl:text-[10px] tracking-[0.13em] uppercase text-white/45 leading-tight mt-1.5">
                     Competitions
                     <br />& Awards
                   </div>
                 </div>
-                {/* Cell 3 — 7+ */}
+                {/* Cell 3 — {stats.projects}+ */}
                 <div className="bg-black aspect-square p-3 xl:p-4 flex flex-col justify-center text-right lg:text-left">
-                  <div className="font-display text-[30px] xl:text-[34px] leading-[0.85] tracking-[-0.03em] text-white">7<span className="text-white/40">+</span></div>
+                  <div className="font-display text-[30px] xl:text-[34px] leading-[0.85] tracking-[-0.03em] text-white">{stats.projects}<span className="text-white/40">+</span></div>
                   <div className="font-mono text-[9px] xl:text-[10px] tracking-[0.13em] uppercase text-white/45 leading-tight mt-1.5">
                     Projects
                     <br />
                     Completed
                   </div>
                 </div>
-                {/* Cell 4 — 5+ */}
+                {/* Cell 4 — experiences */}
                 <div className="bg-black aspect-square p-3 xl:p-4 flex flex-col justify-center text-right">
-                  <div className="font-display text-[30px] xl:text-[34px] leading-[0.85] tracking-[-0.03em] text-white">5<span className="text-white/40">+</span></div>
+                  <div className="font-display text-[30px] xl:text-[34px] leading-[0.85] tracking-[-0.03em] text-white">{stats.experiences}<span className="text-white/40">+</span></div>
                   <div className="font-mono text-[9px] xl:text-[10px] tracking-[0.13em] uppercase text-white/45 leading-tight mt-1.5">
                     Happy
                     <br />
@@ -243,15 +242,15 @@ const BrowseMode: React.FC = () => {
               {/* Mobile: keep simple row */}
               <div className="grid grid-cols-3 gap-4 lg:hidden border-t border-white/10 pt-4">
                 <div>
-                  <div className="font-display text-[28px] leading-none text-white">10<span className="text-white/50">+</span></div>
+                  <div className="font-display text-[28px] leading-none text-white">{stats.competitions}<span className="text-white/50">+</span></div>
                   <div className="font-mono text-[10px] tracking-[0.14em] uppercase text-white/50 leading-tight mt-1">Competitions<br />& Awards</div>
                 </div>
                 <div>
-                  <div className="font-display text-[28px] leading-none text-white">7<span className="text-white/50">+</span></div>
+                  <div className="font-display text-[28px] leading-none text-white">{stats.projects}<span className="text-white/50">+</span></div>
                   <div className="font-mono text-[10px] tracking-[0.14em] uppercase text-white/50 leading-tight mt-1">Projects<br />Completed</div>
                 </div>
                 <div>
-                  <div className="font-display text-[28px] leading-none text-white">5<span className="text-white/50">+</span></div>
+                  <div className="font-display text-[28px] leading-none text-white">{stats.experiences}<span className="text-white/50">+</span></div>
                   <div className="font-mono text-[10px] tracking-[0.14em] uppercase text-white/50 leading-tight mt-1">Happy<br />Clients</div>
                 </div>
               </div>
@@ -263,105 +262,161 @@ const BrowseMode: React.FC = () => {
         </div>
       </motion.section>
 
-      {/* ─── SELECTED PROJECTS — cinematic: slides over pinned hero — full screen, bigger like hero ─── */}
+      {/* ─── SELECTED PROJECTS — dossier index, left-margin numbers, active/archive — full screen ─── */}
       <motion.section
         id="projects"
         initial={{ y: 80, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-20 bg-white border-b-[3px] border-black min-h-[100dvh] lg:min-h-[100dvh] flex flex-col justify-center py-8 lg:py-0"
+        className="relative z-20 bg-white border-b-[3px] border-black min-h-[100dvh] flex flex-col justify-center py-8 lg:py-0"
       >
-        <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-10 lg:py-16 w-full flex-1 flex flex-col justify-center">
-          <div className="flex items-center justify-between border-b-[3px] border-black pb-3 mb-6">
-            <h2 className="font-display text-[14px] md:text-[16px] tracking-[0.08em]">Selected Projects</h2>
-            <a
-              href="#projects"
-              className="font-mono text-[10px] tracking-[0.14em] uppercase flex items-center gap-2 hover:underline underline-offset-4"
-            >
-              View all projects <span aria-hidden>→</span>
+        <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-10 lg:py-16 w-full">
+          {/* header — editorial index style */}
+          <div className="flex items-end justify-between border-b-[3px] border-black pb-3">
+            <div className="flex items-baseline gap-3">
+              <span className="font-mono text-[10px] tracking-[0.18em] uppercase opacity-40">02 — Index</span>
+              <h2 className="font-display text-[22px] md:text-[26px] leading-none tracking-[-0.02em] uppercase">Selected Projects</h2>
+            </div>
+            <span className="font-mono text-[10px] tracking-[0.14em] uppercase opacity-50 hidden sm:inline">
+              {totalProjects} builds · 2024 — 2026
+            </span>
+          </div>
+          <div className="font-mono text-[10px] tracking-[0.12em] uppercase opacity-40 mt-2 mb-6 flex justify-between">
+            <span>Active → Archive</span>
+            <a href={profile.github} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 decoration-black/20 hover:decoration-black hidden sm:inline">
+              github.com/kshrugalj →
             </a>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-0 md:divide-x-[3px] md:divide-black border-[3px] border-black lg:min-h-[360px]">
-            {featured.map((p, idx) => (
-              <a
+          {/* ACTIVE — inverted header, 12-col dossier rows */}
+          <div className="border-[3px] border-black">
+            <div className="px-4 py-2.5 bg-black text-white flex items-center justify-between">
+              <span className="font-mono text-[10px] tracking-[0.18em] uppercase">Active — Now</span>
+              <span className="font-mono text-[10px] tracking-[0.14em]">0{currentProjects.length} / 0{totalProjects}</span>
+            </div>
+            {currentProjects.map((p, idx) => (
+              <div
                 key={p.id}
-                href={p.links[0]?.url ?? "#projects"}
-                target={p.links[0]?.url ? "_blank" : undefined}
-                rel="noopener noreferrer"
-                className="group bg-white flex flex-col hover:bg-black hover:text-white transition-colors"
+                className="group grid grid-cols-12 gap-0 border-t-[3px] border-black hover:bg-black hover:text-white transition-colors"
               >
-                {/* image block — brutalist typographic — bigger */}
-                <div className="aspect-[16/10] lg:aspect-[4/3] overflow-hidden border-b-[3px] border-black group-hover:border-white bg-white relative flex flex-col p-6 lg:p-8 min-h-[280px] lg:min-h-[340px] group-hover:bg-black">
-                  <div className="font-mono text-[9px] tracking-[0.18em] uppercase opacity-50 group-hover:text-white/60">
-                    {p.id} — {p.status}
+                {/* left margin — number + status */}
+                <div className="col-span-12 md:col-span-1 border-b-[3px] md:border-b-0 md:border-r-[3px] border-black group-hover:border-white/15 p-4 flex md:flex-col flex-row justify-between md:justify-start gap-3 md:gap-4">
+                  <span className="font-display text-[28px] leading-none tracking-[-0.02em] opacity-15 group-hover:opacity-100 group-hover:text-white">0{idx + 1}</span>
+                  <span className="font-mono text-[9px] tracking-[0.16em] uppercase border border-black px-1.5 py-1 leading-none self-start group-hover:border-white group-hover:text-white">● {p.status}</span>
+                </div>
+                {/* middle — title / award / description / tags */}
+                <div className="col-span-12 md:col-span-7 p-5 md:p-6 md:border-r-[3px] border-black group-hover:border-white/15">
+                  <div className="font-display text-[28px] md:text-[32px] leading-[0.9] tracking-[-0.025em] uppercase">{p.title}</div>
+                  <div className="font-mono text-[10px] tracking-[0.12em] uppercase opacity-50 mt-1.5 group-hover:text-white/60">
+                    {p.award ?? "Active build — in production"}
                   </div>
-                  <div className="font-display text-[22px] leading-[0.9] tracking-[-0.02em] uppercase mt-2 group-hover:text-white">
-                    {p.title}
-                  </div>
-                  <div className="font-mono text-[10px] leading-snug opacity-40 mt-2 line-clamp-2 group-hover:text-white/50">
-                    {p.tags.slice(0, 3).join(" · ")}
-                  </div>
-                  <div className="mt-auto flex gap-1.5 flex-wrap">
-                    {p.tags.slice(0, 3).map((t) => (
-                      <span key={t} className="font-mono text-[9px] tracking-wide border border-black px-1.5 py-0.5 group-hover:border-white group-hover:text-white">
+                  <p className="font-sans text-[13px] leading-[1.55] opacity-70 group-hover:text-white/75 mt-3 max-w-[58ch]">{p.description}</p>
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {p.tags.slice(0, 6).map((t) => (
+                      <span key={t} className="font-mono text-[9px] tracking-wide border border-black/15 group-hover:border-white/20 px-1.5 py-0.5 leading-none">
                         {t}
                       </span>
                     ))}
-                  </div>
-                  <div className="absolute top-3 right-3 font-mono text-[9px] tracking-[0.16em] uppercase bg-black text-white px-2 py-1 group-hover:bg-white group-hover:text-black">
-                    0{idx + 1}
+                    {p.tags.length > 6 && <span className="font-mono text-[9px] opacity-40 self-center">+{p.tags.length - 6}</span>}
                   </div>
                 </div>
-                {/* meta */}
-                <div className="p-4 flex items-center justify-between gap-3 flex-1">
-                  <div className="flex items-start gap-3">
-                    <span className="font-display text-[22px] leading-none opacity-20 group-hover:opacity-100">0{idx + 1}</span>
-                    <div>
-                      <div className="font-display text-[12px] leading-none tracking-[0.04em] uppercase">{p.title}</div>
-                      <div className="font-mono text-[10px] tracking-[0.08em] uppercase opacity-50 group-hover:opacity-70 mt-1">
-                        {p.award ?? (p.status === "active" ? "Active Build" : "Completed")}
-                      </div>
-                    </div>
+                {/* right — links + arrow */}
+                <div className="col-span-12 md:col-span-4 p-4 md:p-6 flex flex-row md:flex-col justify-between gap-4 border-t-[3px] md:border-t-0 border-black group-hover:border-white/15">
+                  <div className="flex flex-wrap gap-2 content-start">
+                    {p.links.length ? (
+                      p.links.map((l) => (
+                        <a
+                          key={l.label}
+                          href={l.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="font-mono text-[10px] tracking-[0.08em] uppercase underline underline-offset-4 decoration-1 text-[#0000FF] group-hover:text-white group-hover:decoration-white/40 hover:no-underline"
+                        >
+                          {l.label} ↗
+                        </a>
+                      ))
+                    ) : (
+                      <span className="font-mono text-[10px] tracking-[0.1em] uppercase opacity-30">Private build</span>
+                    )}
                   </div>
-                  <span className="w-7 h-7 border-[2px] border-black group-hover:border-white flex items-center justify-center text-[12px] leading-none flex-shrink-0">
-                    →
-                  </span>
-                </div>
-              </a>
-            ))}
-          </div>
-
-          {/* secondary project list — rawblock dense list */}
-          <div className="mt-6 border-[3px] border-black divide-y-[3px] divide-black">
-            <div className="px-4 py-2 bg-black text-white font-mono text-[10px] tracking-[0.14em] uppercase flex justify-between">
-              <span>More builds</span>
-              <span className="opacity-60">{[...currentProjects, ...pastProjects].length} total</span>
-            </div>
-            {[...currentProjects, ...pastProjects].slice(3).map((p) => (
-              <div key={p.id} className="flex items-center gap-3 px-4 py-3 hover:bg-black hover:text-white transition-colors group">
-                <span className="font-mono text-[10px] tracking-widest uppercase border border-black px-1.5 py-0.5 group-hover:border-white">
-                  {p.status}
-                </span>
-                <span className="font-display text-[13px] leading-none flex-1">{p.title}</span>
-                <span className="hidden sm:inline font-mono text-[11px] opacity-60 max-w-[32ch] truncate">{p.description.slice(0, 80)}…</span>
-                <div className="hidden md:flex gap-2">
-                  {p.links.slice(0, 2).map((l) => (
+                  {p.links[0]?.url ? (
                     <a
-                      key={l.label}
-                      href={l.url}
+                      href={p.links[0].url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className="font-mono text-[10px] underline underline-offset-4 hover:no-underline text-[#0000FF] group-hover:text-white"
+                      className="self-end w-9 h-9 border-[2px] border-black group-hover:border-white flex items-center justify-center text-[14px] leading-none group-hover:bg-white group-hover:text-black transition-colors flex-shrink-0"
                     >
-                      {l.label} ↗
+                      →
                     </a>
-                  ))}
+                  ) : (
+                    <span className="self-end w-9 h-9 border-[2px] border-black/15 group-hover:border-white/30 flex items-center justify-center text-[14px] leading-none opacity-20 group-hover:opacity-100 flex-shrink-0">
+                      →
+                    </span>
+                  )}
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* ARCHIVE — white header, same dossier rows */}
+          <div className="border-[3px] border-black mt-6">
+            <div className="px-4 py-2.5 bg-white text-black border-b-[3px] border-black flex items-center justify-between">
+              <span className="font-mono text-[10px] tracking-[0.18em] uppercase">Archive — Completed</span>
+              <span className="font-mono text-[10px] tracking-[0.14em] opacity-50">0{pastProjects.length} builds</span>
+            </div>
+            {pastProjects.map((p, idx) => {
+              const n = currentProjects.length + idx + 1;
+              return (
+                <div
+                  key={p.id}
+                  className="group grid grid-cols-12 gap-0 border-t-[3px] border-black first:border-t-0 hover:bg-black hover:text-white transition-colors"
+                >
+                  <div className="col-span-12 md:col-span-1 border-b-[3px] md:border-b-0 md:border-r-[3px] border-black group-hover:border-white/15 p-4 flex md:flex-col flex-row justify-between md:justify-start gap-3 md:gap-4">
+                    <span className="font-display text-[28px] leading-none tracking-[-0.02em] opacity-15 group-hover:opacity-100">0{n}</span>
+                    <span className="font-mono text-[9px] tracking-[0.16em] uppercase border border-black/40 px-1.5 py-1 leading-none self-start group-hover:border-white/40">◆ {p.status}</span>
+                  </div>
+                  <div className="col-span-12 md:col-span-7 p-5 md:p-6 md:border-r-[3px] border-black group-hover:border-white/15">
+                    <div className="font-display text-[26px] md:text-[30px] leading-[0.9] tracking-[-0.025em] uppercase">{p.title}</div>
+                    <div className="font-mono text-[10px] tracking-[0.12em] uppercase opacity-50 mt-1.5 group-hover:text-white/60">{p.award ?? "Completed"}</div>
+                    <p className="font-sans text-[13px] leading-[1.55] opacity-70 group-hover:text-white/75 mt-3 max-w-[58ch]">{p.description}</p>
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {p.tags.slice(0, 6).map((t) => (
+                        <span key={t} className="font-mono text-[9px] tracking-wide border border-black/15 group-hover:border-white/20 px-1.5 py-0.5 leading-none">
+                          {t}
+                        </span>
+                      ))}
+                      {p.tags.length > 6 && <span className="font-mono text-[9px] opacity-40 self-center">+{p.tags.length - 6}</span>}
+                    </div>
+                  </div>
+                  <div className="col-span-12 md:col-span-4 p-4 md:p-6 flex flex-row md:flex-col justify-between gap-4 border-t-[3px] md:border-t-0 border-black group-hover:border-white/15">
+                    <div className="flex flex-wrap gap-2 content-start">
+                      {p.links.map((l) => (
+                        <a
+                          key={l.label}
+                          href={l.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="font-mono text-[10px] tracking-[0.08em] uppercase underline underline-offset-4 decoration-1 text-[#0000FF] group-hover:text-white group-hover:decoration-white/40 hover:no-underline"
+                        >
+                          {l.label} ↗
+                        </a>
+                      ))}
+                    </div>
+                    <a
+                      href={p.links[0]?.url ?? "#"}
+                      target={p.links[0].url ? "_blank" : undefined}
+                      rel="noopener noreferrer"
+                      className="self-end w-9 h-9 border-[2px] border-black group-hover:border-white flex items-center justify-center text-[14px] leading-none group-hover:bg-white group-hover:text-black transition-colors flex-shrink-0"
+                    >
+                      →
+                    </a>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </motion.section>
