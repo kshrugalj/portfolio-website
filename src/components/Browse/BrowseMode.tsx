@@ -353,11 +353,16 @@ const BrowseMode: React.FC = () => {
                       isDarkCover ? "bg-black text-white" : "bg-white text-black group-hover:!bg-black group-hover:!text-white",
                     ].join(" ")}
                   >
-                    <span className="font-display font-black leading-[0.85] tracking-[-0.03em] text-[48px] xl:text-[56px] opacity-[0.08] group-hover:opacity-[0.14] select-none pointer-events-none">
-                      {initials}
+                    {/* huge number outline like hero KSHRUGAL */}
+                    <span
+                      className="font-display font-black leading-none tracking-[-0.04em] text-[72px] xl:text-[84px] select-none pointer-events-none text-transparent opacity-90"
+                      style={{ WebkitTextStroke: "1.4px currentColor", WebkitTextFillColor: "transparent" } as React.CSSProperties}
+                      aria-hidden
+                    >
+                      0{idx + 1}
                     </span>
-                    <span className="absolute bottom-1.5 right-2 font-mono text-[8px] tracking-[0.14em] uppercase opacity-30">0{idx + 1} / 05</span>
-                    <span className="absolute top-1.5 left-2 font-mono text-[7px] tracking-[0.14em] uppercase opacity-40 border border-current px-1 py-0.5">{p.id}</span>
+                    <span className="absolute bottom-1.5 right-2 font-mono text-[7px] tracking-[0.14em] uppercase opacity-30">{initials} — {p.id}</span>
+                    <span className="absolute top-1.5 left-2 font-mono text-[7px] tracking-[0.14em] uppercase opacity-40 border border-current px-1 py-0.5">0{idx + 1} / 05</span>
                   </div>
                 </div>
               );
