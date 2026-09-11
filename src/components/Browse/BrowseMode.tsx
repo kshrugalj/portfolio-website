@@ -2,6 +2,59 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { profile, stats, currentProjects, pastProjects, experiences, education } from "../../data/content";
 
+// ─── RawBlock platform logos — monochrome, square, 2px border, hover inversion ───
+const PlatformIcon: React.FC<{ label: string }> = ({ label }) => {
+  const l = label.toLowerCase();
+  if (l.includes("github"))
+    return (
+      <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5" aria-hidden>
+        <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.482 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.56 9.56 0 0112 6.844a9.59 9.59 0 012.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+      </svg>
+    );
+  if (l.includes("linkedin"))
+    return (
+      <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5" aria-hidden>
+        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.777 13.019H3.56V9h3.554v11.452z" />
+      </svg>
+    );
+  if (l.includes("instagram"))
+    return (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className="w-3.5 h-3.5" aria-hidden>
+        <rect x="2" y="2" width="20" height="20" rx="5" />
+        <circle cx="12" cy="12" r="5" />
+        <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none" />
+      </svg>
+    );
+  if (l.includes("website"))
+    return (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className="w-3.5 h-3.5" aria-hidden>
+        <circle cx="12" cy="12" r="9" />
+        <path d="M3 12h18M12 3a10 10 0 000 18M12 3a10 10 0 010 18" />
+      </svg>
+    );
+  if (l.includes("devpost"))
+    return <span className="font-mono font-black text-[11px] leading-none tracking-[-0.02em]">D</span>;
+  if (l.includes("article"))
+    return (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className="w-3.5 h-3.5" aria-hidden>
+        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+        <path d="M14 2v6h6M8 13h11M8 17h11" />
+      </svg>
+    );
+  if (l.includes("video") || l.includes("youtube"))
+    return (
+      <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5" aria-hidden>
+        <path d="M8 5.14v14l11-7z" />
+      </svg>
+    );
+  // fallback — generic external link
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-3 h-3" aria-hidden>
+      <path d="M7 17L17 7M7 7h10v10" />
+    </svg>
+  );
+};
+
 const BrowseMode: React.FC = () => {
   const [expandedIdx, setExpandedIdx] = useState<number | null>(0);
   const [showIntro, setShowIntro] = useState(true);
@@ -320,21 +373,23 @@ const BrowseMode: React.FC = () => {
                         {p.tags.length > 4 && <span className="font-mono text-[7px] opacity-40 self-center">+{p.tags.length - 4}</span>}
                       </div>
                       <div className="flex items-center gap-1.5 flex-shrink-0">
-                        {p.links.slice(0, 2).map((l) => (
+                        {p.links.slice(0, 3).map((l) => (
                           <a
                             key={l.label}
                             href={l.url}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={(e) => e.stopPropagation()}
-                            className="font-mono text-[8px] tracking-[0.08em] uppercase underline underline-offset-4 decoration-1 text-[#0000FF] group-hover:text-white group-hover:decoration-white/40 hover:no-underline"
+                            aria-label={l.label}
+                            title={l.label}
+                            className="w-6 h-6 border-[2px] border-black bg-white text-black flex items-center justify-center hover:bg-black hover:text-white hover:border-black group-hover:border-white group-hover:bg-white group-hover:text-black hover:!bg-black hover:!text-white hover:!border-black transition-colors flex-shrink-0"
                           >
-                            {l.label} ↗
+                            <PlatformIcon label={l.label} />
                           </a>
                         ))}
-                        {!p.links.length && <span className="font-mono text-[8px] uppercase opacity-30 hidden lg:inline">Private</span>}
+                        {!p.links.length && <span className="font-mono text-[7px] uppercase opacity-30 hidden lg:inline border border-black/15 px-1 py-0.5 group-hover:border-white/20 group-hover:text-white">Private</span>}
                         {p.links[0]?.url ? (
-                          <a href={p.links[0].url} target="_blank" rel="noopener noreferrer" className="w-6 h-6 border-[2px] border-black group-hover:border-white group-hover:bg-white group-hover:text-black flex items-center justify-center text-[10px] leading-none flex-shrink-0">
+                          <a href={p.links[0].url} target="_blank" rel="noopener noreferrer" aria-label="Open primary link" className="w-6 h-6 border-[2px] border-black bg-black text-white group-hover:border-white group-hover:bg-white group-hover:text-black hover:!bg-white hover:!text-black flex items-center justify-center text-[10px] leading-none flex-shrink-0 transition-colors">
                             →
                           </a>
                         ) : (
