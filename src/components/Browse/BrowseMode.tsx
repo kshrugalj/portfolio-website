@@ -294,7 +294,6 @@ const BrowseMode: React.FC = () => {
             {[...currentProjects, ...pastProjects].map((p, idx) => {
               const isReverse = idx % 2 === 1;
               const isDarkCover = idx % 2 === 0;
-              const initials = p.title.replace(/[^A-Za-z]/g, "").slice(0, 2).toUpperCase() || p.id.slice(0, 2).toUpperCase();
               return (
                 <div
                   key={p.id}
@@ -361,8 +360,8 @@ const BrowseMode: React.FC = () => {
                     >
                       0{idx + 1}
                     </span>
-                    <span className="absolute bottom-1.5 right-2 font-mono text-[7px] tracking-[0.14em] uppercase opacity-30 hidden lg:inline">{initials} — {p.id}</span>
-                    <span className="absolute top-1.5 left-2 font-mono text-[7px] tracking-[0.14em] uppercase opacity-40 border border-current px-1 py-0.5 hidden lg:inline">0{idx + 1} / 05</span>
+                    <span className="absolute bottom-1.5 right-2 font-mono text-[7px] tracking-[0.14em] uppercase opacity-30 hidden lg:inline">0{idx + 1}</span>
+                    <span className="absolute top-1.5 left-2 font-mono text-[7px] tracking-[0.14em] uppercase opacity-40 border border-current px-1 py-0.5 hidden lg:inline">0{idx + 1}</span>
                     {/* mobile tiny label */}
                     <span className="absolute bottom-1 right-1 font-mono text-[6px] tracking-wide uppercase opacity-30 lg:hidden">0{idx + 1}</span>
                   </div>
