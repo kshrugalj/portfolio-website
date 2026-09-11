@@ -22,8 +22,37 @@ const BrowseMode: React.FC = () => {
   const heroOpacity = useTransform(scrollY, [0, 450], [1, 0.85]);
   const giantParallaxY = useTransform(scrollY, [0, 700], [0, -110]);
 
-  // Select 3 featured projects for the hero grid — maps to the reference's 3 cards
-  const featured = [...currentProjects.slice(0, 2), pastProjects[0]];
+  const [headerVisible, setHeaderVisible] = useState(true);
+  useEffect(() => {
+    if (showIntro) return;
+    const hideTimer = setTimeout(() => setHeaderVisible(false), 1800);
+    let lastY = 0;
+    let hideTimeout: number | undefined;
+    const handleMove = (e: MouseEvent) => {
+      const y = e.clientY;
+      const goingUp = y < lastY;
+      lastY = y;
+      if (y < 80) {
+        setHeaderVisible(true);
+        if (hideTimeout) window.clearTimeout(hideTimeout);
+      } else if (y > 160 || (goingUp === false && y > 120)) {
+        if (hideTimeout) window.clearTimeout(hideTimeout);
+        hideTimeout = window.setTimeout(() => setHeaderVisible(false), 260) as unknown as number;
+      } else if (goingUp && y < 160) {
+        setHeaderVisible(true);
+        if (hideTimeout) window.clearTimeout(hideTimeout);
+      }
+    };
+    window.addEventListener("mousemove", handleMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMove);
+      window.clearTimeout(hideTimer);
+      if (hideTimeout) window.clearTimeout(hideTimeout);
+    };
+  }, [showIntro]);
+
+  // Select 3 featured projects — Recall replaces DocOps
+  const featured = [...currentProjects.slice(0, 3)];
 
   return (
     <div className="min-h-screen bg-white text-black selection:bg-black selection:text-white">
@@ -81,9 +110,14 @@ const BrowseMode: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* ─── TOP RULE ─── */}
-      <header className="sticky top-0 z-40 bg-white border-b-[3px] border-black">
-        <div className="max-w-[1280px] mx-auto flex items-center justify-between px-4 md:px-6 py-3">
+      {/* ─── TOP RULE — floating bar, appears when cursor goes toward top ─── */}
+      <motion.header
+        initial={{ y: 0, opacity: 1 }}
+        animate={{ y: headerVisible ? 0 : -120, opacity: headerVisible ? 1 : 0 }}
+        transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
+        className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-24px)] max-w-[1280px] bg-white border-[3px] border-black will-change-transform"
+      >
+        <div className="flex items-center justify-between px-4 md:px-6 py-3">
           <div className="font-mono text-[10px] leading-none tracking-[0.18em] uppercase">
             <div className="font-bold">Software Engineer</div>
             <div className="opacity-60">Digital Creator</div>
@@ -98,12 +132,12 @@ const BrowseMode: React.FC = () => {
             <span className="w-5 h-5 border-[2px] border-black flex items-center justify-center text-[10px] leading-none">✦</span>
           </div>
         </div>
-      </header>
+      </motion.header>
 
-      {/* ─── HERO — whole-screen portrait, pinned — below contents slide over cinematically ─── */}
+      {/* ─── HERO — whole-screen portrait, pinned — below contents slide over cinematically — full viewport ─── */}
       <motion.section
         style={{ y: heroParallaxY, scale: heroScale, opacity: heroOpacity } as any}
-        className="sticky top-[42px] z-10 bg-black text-white overflow-hidden border-b-[3px] border-black min-h-[calc(100svh-42px)] lg:min-h-[calc(100dvh-42px)] flex flex-col will-change-transform"
+        className="sticky top-0 z-10 bg-black text-white overflow-hidden border-b-[3px] border-black min-h-[100dvh] flex flex-col will-change-transform pt-[68px]"
       >
         {/* Giant first-name behind — near header — parallax slower than scroll */}
         <motion.div
@@ -229,16 +263,16 @@ const BrowseMode: React.FC = () => {
         </div>
       </motion.section>
 
-      {/* ─── SELECTED PROJECTS — cinematic: slides over pinned hero — full screen ─── */}
+      {/* ─── SELECTED PROJECTS — cinematic: slides over pinned hero — full screen, bigger like hero ─── */}
       <motion.section
         id="projects"
         initial={{ y: 80, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-20 bg-white border-b-[3px] border-black min-h-[100dvh] flex flex-col justify-center"
+        className="relative z-20 bg-white border-b-[3px] border-black min-h-[100dvh] lg:min-h-[100dvh] flex flex-col justify-center py-8 lg:py-0"
       >
-        <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-6 md:py-8">
+        <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-10 lg:py-16 w-full flex-1 flex flex-col justify-center">
           <div className="flex items-center justify-between border-b-[3px] border-black pb-3 mb-6">
             <h2 className="font-display text-[14px] md:text-[16px] tracking-[0.08em]">Selected Projects</h2>
             <a
@@ -249,7 +283,7 @@ const BrowseMode: React.FC = () => {
             </a>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-0 md:divide-x-[3px] md:divide-black border-[3px] border-black">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-0 md:divide-x-[3px] md:divide-black border-[3px] border-black lg:min-h-[360px]">
             {featured.map((p, idx) => (
               <a
                 key={p.id}
@@ -258,8 +292,8 @@ const BrowseMode: React.FC = () => {
                 rel="noopener noreferrer"
                 className="group bg-white flex flex-col hover:bg-black hover:text-white transition-colors"
               >
-                {/* image block — brutalist typographic (no external bitmap needed) */}
-                <div className="aspect-[16/10] overflow-hidden border-b-[3px] border-black group-hover:border-white bg-white relative flex flex-col p-5 group-hover:bg-black">
+                {/* image block — brutalist typographic — bigger */}
+                <div className="aspect-[16/10] lg:aspect-[4/3] overflow-hidden border-b-[3px] border-black group-hover:border-white bg-white relative flex flex-col p-6 lg:p-8 min-h-[280px] lg:min-h-[340px] group-hover:bg-black">
                   <div className="font-mono text-[9px] tracking-[0.18em] uppercase opacity-50 group-hover:text-white/60">
                     {p.id} — {p.status}
                   </div>

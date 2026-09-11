@@ -11,7 +11,7 @@ export const profile = {
 
 export const stats = {
   competitions: 10,
-  projects: 7,
+  projects: 6,
   experiences: 5,
 };
 
@@ -59,20 +59,6 @@ export const currentProjects: Project[] = [
 ];
 
 export const pastProjects: Project[] = [
-  {
-    id: "docops-copilot",
-    title: "DocOps Copilot",
-    status: "completed",
-    award: "Built @ DVHacks 2026",
-    description:
-      "A document processing system that transforms unstructured documents into actionable outputs. Classifies document types, highlights potential risks, identifies missing information, and suggests next steps.",
-    tags: ["AI", "Groq", "Llama", "Next.js", "Node.js", "PostgreSQL", "Prisma", "PyTesseract", "Python", "shadcn/ui", "Tailwind CSS", "TypeScript"],
-    links: [
-      { label: "Website", url: "https://docops-copilot.vercel.app/" },
-      { label: "GitHub", url: "https://github.com/kshrugalj/DVHacks" },
-      { label: "Devpost", url: "https://devpost.com/software/docops-copilot" },
-    ],
-  },
   {
     id: "admitx",
     title: "AdmitX",
