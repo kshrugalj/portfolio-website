@@ -289,128 +289,79 @@ const BrowseMode: React.FC = () => {
             </a>
           </div>
 
-          {/* HORIZONTAL SCROLL — 5 cards snap, fits one viewport, no vertical overflow */}
-          <div className="relative flex-1 min-h-0 flex flex-col">
-            <div className="flex gap-px bg-black border-[3px] border-black overflow-x-auto snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth flex-1">
-              {[...currentProjects, ...pastProjects].map((p, idx) => {
-                const isDark = idx % 2 === 1;
-                return (
-                  <div
-                    key={p.id}
-                    className={[
-                      "group relative flex flex-col p-4 lg:p-5 flex-shrink-0 w-[84vw] sm:w-[340px] lg:w-[360px] xl:w-[380px] snap-start overflow-hidden",
-                      isDark ? "bg-black text-white" : "bg-white text-black",
-                      "hover:!bg-black hover:!text-white transition-colors",
-                    ].join(" ")}
-                  >
-                    {/* top meta */}
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-[9px] tracking-[0.16em] uppercase opacity-40 group-hover:text-white/60">0{idx + 1} — {p.id}</span>
-                      <span
-                        className={[
-                          "font-mono text-[8px] tracking-[0.16em] uppercase border px-1 py-0.5 leading-none",
-                          isDark ? "border-white/30 group-hover:border-white" : "border-black group-hover:border-white group-hover:text-white",
-                        ].join(" ")}
-                      >
+          {/* SPLIT DIPTYCH — alternating text / typographic cover, compact to fit one viewport */}
+          <div className="border-[3px] border-black flex flex-col flex-1 min-h-0 divide-y-[3px] divide-black overflow-hidden">
+            {[...currentProjects, ...pastProjects].map((p, idx) => {
+              const isReverse = idx % 2 === 1;
+              const isDarkCover = idx % 2 === 0;
+              const initials = p.title.replace(/[^A-Za-z]/g, "").slice(0, 2).toUpperCase() || p.id.slice(0, 2).toUpperCase();
+              return (
+                <div
+                  key={p.id}
+                  className={["group flex min-h-0 flex-1", isReverse ? "flex-row-reverse" : "flex-row", "hover:bg-black hover:text-white transition-colors"].join(" ")}
+                >
+                  {/* TEXT SIDE — 7/12 */}
+                  <div className="flex-[7] min-w-0 p-3 lg:p-4 flex flex-col justify-center gap-1.5 border-black group-hover:border-white/15 overflow-hidden">
+                    <div className="flex items-center gap-2">
+                      <span className="font-display text-[14px] leading-none opacity-15 group-hover:opacity-100">0{idx + 1}</span>
+                      <span className="font-mono text-[8px] tracking-[0.16em] uppercase border border-black px-1 py-0.5 leading-none group-hover:border-white group-hover:text-white">
                         {idx < currentProjects.length ? "● Active" : "◆ Archive"}
                       </span>
+                      <span className="hidden sm:inline font-mono text-[8px] tracking-[0.12em] uppercase opacity-40 group-hover:text-white/50">— {p.id}</span>
                     </div>
-
-                    {/* title block */}
-                    <div className="flex-1 min-h-0 flex flex-col">
-                      <h3 className="font-display uppercase leading-[0.88] tracking-[-0.028em] mt-3 text-[24px] lg:text-[28px] group-hover:text-white">{p.title}</h3>
-                      <div className="font-mono text-[9px] tracking-[0.12em] uppercase opacity-50 mt-1.5 group-hover:text-white/60 line-clamp-1">
-                        {p.award ?? (idx < currentProjects.length ? "Active build — in production" : "Completed")}
-                      </div>
-                      <p className="font-sans text-[12px] leading-[1.5] opacity-70 group-hover:text-white/75 mt-3 line-clamp-4">{p.description}</p>
-                      <div className="mt-4 flex flex-wrap gap-1 content-start">
-                        {p.tags.slice(0, 5).map((t) => (
-                          <span
-                            key={t}
-                            className={[
-                              "font-mono text-[8px] tracking-wide border px-1 py-0.5 leading-none",
-                              isDark ? "border-white/20 group-hover:border-white/30" : "border-black/15 group-hover:border-white/20 group-hover:text-white",
-                            ].join(" ")}
-                          >
+                    <h3 className="font-display uppercase leading-[0.9] tracking-[-0.02em] text-[16px] lg:text-[19px] xl:text-[21px] group-hover:text-white truncate">{p.title}</h3>
+                    <div className="font-mono text-[8px] lg:text-[9px] tracking-[0.12em] uppercase opacity-50 group-hover:text-white/60 line-clamp-1">{p.award ?? (idx < currentProjects.length ? "Active build — in production" : "Completed")}</div>
+                    <p className="font-sans text-[11px] lg:text-[12px] leading-[1.4] opacity-70 group-hover:text-white/75 line-clamp-1 hidden sm:block">{p.description}</p>
+                    <div className="flex items-center justify-between gap-2 pt-1">
+                      <div className="flex flex-wrap gap-1">
+                        {p.tags.slice(0, 4).map((t) => (
+                          <span key={t} className="font-mono text-[7px] lg:text-[8px] tracking-wide border border-black/15 group-hover:border-white/20 px-1 py-0.5 leading-none group-hover:text-white">
                             {t}
                           </span>
                         ))}
-                        {p.tags.length > 5 && <span className="font-mono text-[8px] opacity-40 self-center">+{p.tags.length - 5}</span>}
+                        {p.tags.length > 4 && <span className="font-mono text-[7px] opacity-40 self-center">+{p.tags.length - 4}</span>}
                       </div>
-                    </div>
-
-                    {/* footer */}
-                    <div className="mt-auto pt-4 flex flex-col gap-3">
-                      <div className="flex flex-wrap gap-1.5">
-                        {p.links.length ? (
-                          p.links.slice(0, 2).map((l) => (
-                            <a
-                              key={l.label}
-                              href={l.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              onClick={(e) => e.stopPropagation()}
-                              className={[
-                                "font-mono text-[9px] tracking-[0.08em] uppercase underline underline-offset-4 decoration-1 hover:no-underline",
-                                isDark ? "text-white decoration-white/30 group-hover:decoration-white/50" : "text-[#0000FF] group-hover:text-white group-hover:decoration-white/40",
-                              ].join(" ")}
-                            >
-                              {l.label} ↗
-                            </a>
-                          ))
-                        ) : (
-                          <span className="font-mono text-[9px] tracking-wide uppercase opacity-30 group-hover:text-white/50">Private build</span>
-                        )}
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="font-mono text-[9px] tracking-[0.12em] uppercase opacity-30">0{idx + 1} / 05</span>
-                        {p.links[0]?.url ? (
+                      <div className="flex items-center gap-1.5 flex-shrink-0">
+                        {p.links.slice(0, 2).map((l) => (
                           <a
-                            href={p.links[0].url}
+                            key={l.label}
+                            href={l.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={[
-                              "w-7 h-7 border-[2px] flex items-center justify-center text-[12px] leading-none flex-shrink-0 transition-colors",
-                              isDark ? "border-white bg-white text-black" : "border-black group-hover:border-white group-hover:bg-white group-hover:text-black",
-                            ].join(" ")}
+                            onClick={(e) => e.stopPropagation()}
+                            className="font-mono text-[8px] tracking-[0.08em] uppercase underline underline-offset-4 decoration-1 text-[#0000FF] group-hover:text-white group-hover:decoration-white/40 hover:no-underline"
                           >
+                            {l.label} ↗
+                          </a>
+                        ))}
+                        {!p.links.length && <span className="font-mono text-[8px] uppercase opacity-30 hidden lg:inline">Private</span>}
+                        {p.links[0]?.url ? (
+                          <a href={p.links[0].url} target="_blank" rel="noopener noreferrer" className="w-6 h-6 border-[2px] border-black group-hover:border-white group-hover:bg-white group-hover:text-black flex items-center justify-center text-[10px] leading-none flex-shrink-0">
                             →
                           </a>
                         ) : (
-                          <span
-                            className={[
-                              "w-7 h-7 border-[2px] flex items-center justify-center text-[12px] leading-none flex-shrink-0 opacity-20 group-hover:opacity-100",
-                              isDark ? "border-white/40" : "border-black/20 group-hover:border-white/40",
-                            ].join(" ")}
-                          >
-                            →
-                          </span>
+                          <span className="w-6 h-6 border-[2px] border-black/20 group-hover:border-white/40 flex items-center justify-center text-[10px] leading-none opacity-20 group-hover:opacity-100 flex-shrink-0">→</span>
                         )}
                       </div>
                     </div>
-
-                    {/* corner index */}
-                    <span
-                      className={[
-                        "absolute top-0 right-0 font-mono text-[9px] tracking-[0.14em] px-1.5 py-1 leading-none border-l border-b",
-                        isDark ? "bg-white text-black border-black" : "bg-black text-white border-black group-hover:bg-white group-hover:text-black group-hover:border-white",
-                      ].join(" ")}
-                    >
-                      0{idx + 1}
-                    </span>
                   </div>
-                );
-              })}
-            </div>
-            <div className="flex items-center justify-between mt-2 font-mono text-[9px] tracking-[0.12em] uppercase opacity-40">
-              <span className="hidden sm:inline">← Drag or scroll →</span>
-              <span className="sm:hidden">Swipe →</span>
-              <div className="flex gap-1">
-                {[...Array(5)].map((_, i) => (
-                  <span key={i} className="w-6 h-1 border border-black bg-black opacity-20 first:opacity-100" />
-                ))}
-              </div>
-            </div>
+                  {/* COVER SIDE — 5/12, typographic */}
+                  <div
+                    className={[
+                      "hidden lg:flex flex-[5] relative items-center justify-center overflow-hidden border-black group-hover:border-white/15",
+                      isReverse ? "border-r-[3px]" : "border-l-[3px]",
+                      isDarkCover ? "bg-black text-white" : "bg-white text-black group-hover:!bg-black group-hover:!text-white",
+                    ].join(" ")}
+                  >
+                    <span className="font-display font-black leading-[0.85] tracking-[-0.03em] text-[48px] xl:text-[56px] opacity-[0.08] group-hover:opacity-[0.14] select-none pointer-events-none">
+                      {initials}
+                    </span>
+                    <span className="absolute bottom-1.5 right-2 font-mono text-[8px] tracking-[0.14em] uppercase opacity-30">0{idx + 1} / 05</span>
+                    <span className="absolute top-1.5 left-2 font-mono text-[7px] tracking-[0.14em] uppercase opacity-40 border border-current px-1 py-0.5">{p.id}</span>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </motion.section>
