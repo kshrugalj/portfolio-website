@@ -355,7 +355,7 @@ const BrowseMode: React.FC = () => {
                   >
                     {/* huge number outline like hero KSHRUGAL — now visible on all breakpoints */}
                     <span
-                      className="font-display font-black leading-none tracking-[-0.04em] text-[48px] lg:text-[72px] xl:text-[84px] select-none pointer-events-none text-transparent opacity-90"
+                      className="font-display font-black leading-none tracking-[-0.04em] text-[48px] lg:text-[72px] xl:text-[84px] select-none pointer-events-none opacity-[0.95]"
                       style={{ WebkitTextStroke: "1.4px currentColor", WebkitTextFillColor: "transparent" } as React.CSSProperties}
                       aria-hidden
                     >
