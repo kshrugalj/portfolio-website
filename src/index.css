@@ -1,25 +1,33 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Work+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Instrument+Serif:ital@0;1&display=swap');
 
 @theme {
-  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", "Fira Code", monospace;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Archivo Black", sans-serif;
+  --font-sans: "Work Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, monospace;
+  --font-script: "Instrument Serif", serif;
 
+  --color-raw-black: #000000;
+  --color-raw-white: #FFFFFF;
+  --color-raw-blue: #0000FF;
+  --color-raw-red: #FF0000;
+  --color-raw-green: #008000;
+  --color-raw-orange: #FFA500;
+  --color-raw-sunken: #F0F0F0;
+
+  /* legacy term tokens — kept so Terminal mode still renders if user switches */
   --color-term-bg: #0a0e14;
   --color-term-surface: #131720;
   --color-term-raised: #1a1f2b;
   --color-term-gutter: #0d1117;
-
   --color-term-text: #c5cdd9;
   --color-term-muted: #5c6773;
   --color-term-dim: #7a8ba8;
-
   --color-term-green: #03dac6;
   --color-term-yellow: #ffd580;
   --color-term-blue: #82aaff;
   --color-term-red: #ff5572;
   --color-term-purple: #c792ea;
-
   --color-term-border: #1e2530;
   --color-term-border-active: #2a3040;
 }
@@ -27,6 +35,7 @@
 @layer base {
   * {
     box-sizing: border-box;
+    border-radius: 0 !important;
   }
 
   html {
@@ -34,48 +43,80 @@
   }
 
   body {
-    font-family: var(--font-mono);
-    background-color: var(--color-term-bg);
-    color: var(--color-term-text);
+    font-family: var(--font-sans);
+    background-color: var(--color-raw-white);
+    color: var(--color-raw-black);
     line-height: 1.5;
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+
   ::selection {
-    background: var(--color-term-green);
-    color: var(--color-term-bg);
+    background: var(--color-raw-black);
+    color: var(--color-raw-white);
   }
 
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--color-term-bg);
+    background: var(--color-raw-white);
+    border-left: 1px solid var(--color-raw-black);
   }
   ::-webkit-scrollbar-thumb {
-    background: var(--color-term-border);
-    border-radius: 3px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-term-dim);
+    background: var(--color-raw-black);
   }
 }
 
-@keyframes cursor-blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
+/* RawBlock brutalist utilities */
+@utility border-raw {
+  border: 3px solid #000;
+}
+@utility border-raw-heavy {
+  border: 5px solid #000;
+}
+@utility border-raw-thin {
+  border: 1px solid #000;
 }
 
-@keyframes terminal-reveal {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Outline text for giant PORTFOLIO */
+.text-outline-white {
+  -webkit-text-stroke: 1.5px rgba(255,255,255,0.9);
+  color: transparent;
+}
+.text-outline-black {
+  -webkit-text-stroke: 1.5px #000;
+  color: transparent;
 }
 
-@keyframes boot-progress {
-  from { width: 0%; }
-  to { width: 100%; }
+/* Disable shadows everywhere */
+* {
+  box-shadow: none !important;
+}
+
+/* RawBlock brutalist cursors — sharp, 0 radius, 3px language */
+:root {
+  --cursor-default: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'><rect x='0.5' y='0.5' width='27' height='27' fill='black' stroke='white' stroke-width='2'/><rect x='12' y='12' width='4' height='4' fill='white'/></svg>") 14 14, auto;
+  --cursor-pointer: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'><rect x='0.5' y='0.5' width='27' height='27' fill='white' stroke='black' stroke-width='2.5'/><path d='M14 10 L14 18 M10 14 L18 14' stroke='black' stroke-width='1.6' stroke-linecap='square'/></svg>") 14 14, pointer;
+}
+
+html, body {
+  cursor: var(--cursor-default);
+}
+
+a, button, [role="button"], summary {
+  cursor: var(--cursor-pointer) !important;
+}
+
+input, textarea, [contenteditable="true"] {
+  cursor: text !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
