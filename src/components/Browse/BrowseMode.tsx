@@ -302,7 +302,6 @@ const BrowseMode: React.FC = () => {
                   {/* TEXT SIDE — 7/12 — tight so titles fit in flex-1 rows */}
                   <div className="flex-[7] min-w-0 p-2 lg:p-3 flex flex-col justify-center gap-0.5 border-black group-hover:border-white/15">
                     <div className="flex items-center gap-1.5">
-                      <span className="font-display text-[12px] lg:text-[13px] leading-none opacity-20 group-hover:opacity-100">0{idx + 1}</span>
                       <span className="font-mono text-[7px] tracking-[0.16em] uppercase border border-black px-1 py-0.5 leading-none group-hover:border-white group-hover:text-white">
                         {idx < currentProjects.length ? "● Active" : "◆ Archive"}
                       </span>
@@ -352,7 +351,7 @@ const BrowseMode: React.FC = () => {
                       isDarkCover ? "bg-black text-white" : "bg-white text-black group-hover:!bg-black group-hover:!text-white",
                     ].join(" ")}
                   >
-                    {/* huge number outline like hero KSHRUGAL — now visible on all breakpoints */}
+                    {/* huge number outline like hero KSHRUGAL — only number in section */}
                     <span
                       className="font-display font-black leading-none tracking-[-0.04em] text-[48px] lg:text-[72px] xl:text-[84px] select-none pointer-events-none opacity-[0.95]"
                       style={{ WebkitTextStroke: "1.4px currentColor", WebkitTextFillColor: "transparent" } as React.CSSProperties}
@@ -360,10 +359,6 @@ const BrowseMode: React.FC = () => {
                     >
                       0{idx + 1}
                     </span>
-                    <span className="absolute bottom-1.5 right-2 font-mono text-[7px] tracking-[0.14em] uppercase opacity-30 hidden lg:inline">0{idx + 1}</span>
-                    <span className="absolute top-1.5 left-2 font-mono text-[7px] tracking-[0.14em] uppercase opacity-40 border border-current px-1 py-0.5 hidden lg:inline">0{idx + 1}</span>
-                    {/* mobile tiny label */}
-                    <span className="absolute bottom-1 right-1 font-mono text-[6px] tracking-wide uppercase opacity-30 lg:hidden">0{idx + 1}</span>
                   </div>
                 </div>
               );
