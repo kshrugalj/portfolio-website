@@ -300,8 +300,8 @@ const BrowseMode: React.FC = () => {
                   key={p.id}
                   className={["group flex min-h-0 flex-1", isReverse ? "flex-row-reverse" : "flex-row", "hover:bg-black hover:text-white transition-colors"].join(" ")}
                 >
-                  {/* TEXT SIDE — 7/12 */}
-                  <div className="flex-[7] min-w-0 p-3 lg:p-4 flex flex-col justify-center gap-1.5 border-black group-hover:border-white/15 overflow-hidden">
+                  {/* TEXT SIDE — 7/12 — titles fully visible, no truncate */}
+                  <div className="flex-[7] min-w-0 p-3 lg:p-4 flex flex-col justify-center gap-1 border-black group-hover:border-white/15">
                     <div className="flex items-center gap-2">
                       <span className="font-display text-[14px] leading-none opacity-15 group-hover:opacity-100">0{idx + 1}</span>
                       <span className="font-mono text-[8px] tracking-[0.16em] uppercase border border-black px-1 py-0.5 leading-none group-hover:border-white group-hover:text-white">
@@ -309,9 +309,9 @@ const BrowseMode: React.FC = () => {
                       </span>
                       <span className="hidden sm:inline font-mono text-[8px] tracking-[0.12em] uppercase opacity-40 group-hover:text-white/50">— {p.id}</span>
                     </div>
-                    <h3 className="font-display uppercase leading-[0.9] tracking-[-0.02em] text-[16px] lg:text-[19px] xl:text-[21px] group-hover:text-white truncate">{p.title}</h3>
+                    <h3 className="font-display uppercase leading-[0.95] tracking-[-0.02em] text-[17px] lg:text-[20px] xl:text-[22px] group-hover:text-white break-words line-clamp-2">{p.title}</h3>
                     <div className="font-mono text-[8px] lg:text-[9px] tracking-[0.12em] uppercase opacity-50 group-hover:text-white/60 line-clamp-1">{p.award ?? (idx < currentProjects.length ? "Active build — in production" : "Completed")}</div>
-                    <p className="font-sans text-[11px] lg:text-[12px] leading-[1.4] opacity-70 group-hover:text-white/75 line-clamp-1 hidden sm:block">{p.description}</p>
+                    <p className="font-sans text-[11px] lg:text-[12px] leading-[1.4] opacity-60 group-hover:text-white/70 line-clamp-1 hidden sm:block max-w-[60ch]">{p.description}</p>
                     <div className="flex items-center justify-between gap-2 pt-1">
                       <div className="flex flex-wrap gap-1">
                         {p.tags.slice(0, 4).map((t) => (
