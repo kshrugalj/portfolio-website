@@ -262,16 +262,16 @@ const BrowseMode: React.FC = () => {
         </div>
       </motion.section>
 
-      {/* ─── SELECTED PROJECTS — bento compact, fits one viewport ─── */}
+      {/* ─── SELECTED PROJECTS — diptych, titles fully visible (rows auto-height) ─── */}
       <motion.section
         id="projects"
         initial={{ y: 80, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-20 bg-white border-b-[3px] border-black h-[100dvh] min-h-[100dvh] flex flex-col justify-center overflow-hidden py-0"
+        className="relative z-20 bg-white border-b-[3px] border-black min-h-[100dvh] flex flex-col justify-center py-8 lg:py-12"
       >
-        <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-4 lg:py-5 w-full flex flex-col justify-center flex-1 min-h-0">
+        <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-6 lg:py-8 w-full">
           <div className="flex flex-wrap items-end justify-between gap-3 border-b-[3px] border-black pb-2">
             <div className="flex items-baseline gap-3">
               <span className="font-mono text-[10px] tracking-[0.18em] uppercase opacity-40">02 — Works</span>
@@ -289,8 +289,8 @@ const BrowseMode: React.FC = () => {
             </a>
           </div>
 
-          {/* SPLIT DIPTYCH — alternating text / typographic cover, compact to fit one viewport */}
-          <div className="border-[3px] border-black flex flex-col flex-1 min-h-0 divide-y-[3px] divide-black overflow-hidden">
+          {/* SPLIT DIPTYCH — rows auto-height so titles never clip */}
+          <div className="border-[3px] border-black flex flex-col divide-y-[3px] divide-black">
             {[...currentProjects, ...pastProjects].map((p, idx) => {
               const isReverse = idx % 2 === 1;
               const isDarkCover = idx % 2 === 0;
@@ -298,7 +298,7 @@ const BrowseMode: React.FC = () => {
               return (
                 <div
                   key={p.id}
-                  className={["group flex min-h-0 flex-1", isReverse ? "flex-row-reverse" : "flex-row", "hover:bg-black hover:text-white transition-colors"].join(" ")}
+                  className={["group flex min-h-[132px] lg:min-h-[148px]", isReverse ? "flex-row-reverse" : "flex-row", "hover:bg-black hover:text-white transition-colors"].join(" ")}
                 >
                   {/* TEXT SIDE — 7/12 — titles fully visible, no truncate */}
                   <div className="flex-[7] min-w-0 p-3 lg:p-4 flex flex-col justify-center gap-1 border-black group-hover:border-white/15">
