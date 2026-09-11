@@ -348,21 +348,23 @@ const BrowseMode: React.FC = () => {
                   {/* COVER SIDE — 5/12, typographic */}
                   <div
                     className={[
-                      "hidden lg:flex flex-[5] relative items-center justify-center overflow-hidden border-black group-hover:border-white/15",
+                      "flex flex-[5] relative items-center justify-center overflow-hidden border-black group-hover:border-white/15",
                       isReverse ? "border-r-[3px]" : "border-l-[3px]",
                       isDarkCover ? "bg-black text-white" : "bg-white text-black group-hover:!bg-black group-hover:!text-white",
                     ].join(" ")}
                   >
-                    {/* huge number outline like hero KSHRUGAL */}
+                    {/* huge number outline like hero KSHRUGAL — now visible on all breakpoints */}
                     <span
-                      className="font-display font-black leading-none tracking-[-0.04em] text-[72px] xl:text-[84px] select-none pointer-events-none text-transparent opacity-90"
+                      className="font-display font-black leading-none tracking-[-0.04em] text-[48px] lg:text-[72px] xl:text-[84px] select-none pointer-events-none text-transparent opacity-90"
                       style={{ WebkitTextStroke: "1.4px currentColor", WebkitTextFillColor: "transparent" } as React.CSSProperties}
                       aria-hidden
                     >
                       0{idx + 1}
                     </span>
-                    <span className="absolute bottom-1.5 right-2 font-mono text-[7px] tracking-[0.14em] uppercase opacity-30">{initials} — {p.id}</span>
-                    <span className="absolute top-1.5 left-2 font-mono text-[7px] tracking-[0.14em] uppercase opacity-40 border border-current px-1 py-0.5">0{idx + 1} / 05</span>
+                    <span className="absolute bottom-1.5 right-2 font-mono text-[7px] tracking-[0.14em] uppercase opacity-30 hidden lg:inline">{initials} — {p.id}</span>
+                    <span className="absolute top-1.5 left-2 font-mono text-[7px] tracking-[0.14em] uppercase opacity-40 border border-current px-1 py-0.5 hidden lg:inline">0{idx + 1} / 05</span>
+                    {/* mobile tiny label */}
+                    <span className="absolute bottom-1 right-1 font-mono text-[6px] tracking-wide uppercase opacity-30 lg:hidden">0{idx + 1}</span>
                   </div>
                 </div>
               );
