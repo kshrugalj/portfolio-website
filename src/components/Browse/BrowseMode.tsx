@@ -289,78 +289,58 @@ const BrowseMode: React.FC = () => {
             </a>
           </div>
 
-          {/* BENTO GRID — compact: fits 3 rows in viewport */}
-          <div className="grid grid-cols-12 auto-rows-[148px] lg:auto-rows-[168px] xl:auto-rows-[188px] gap-px bg-black border-[3px] border-black flex-1 min-h-0">
-            {[...currentProjects, ...pastProjects].map((p, idx) => {
-              // irregular spans: 8/4, 5/7, 12 — creates bento rhythm for 5 items
-              const spans = ["lg:col-span-8", "lg:col-span-4", "lg:col-span-5", "lg:col-span-7", "lg:col-span-12"] as const;
-              const isDark = idx === 1 || idx === 4;
-              const isFull = idx === 4;
-              return (
-                <div
-                  key={p.id}
-                  className={[
-                    "group relative flex flex-col p-3 lg:p-4 xl:p-5 col-span-12 overflow-hidden",
-                    spans[idx] ?? "lg:col-span-6",
-                    isDark ? "bg-black text-white" : "bg-white text-black",
-                    "hover:!bg-black hover:!text-white transition-colors",
-                    isFull ? "lg:flex-row lg:items-stretch gap-4" : "",
-                  ].join(" ")}
-                >
-                  {/* top meta */}
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-[9px] tracking-[0.16em] uppercase opacity-40 group-hover:text-white/60">0{idx + 1} — {p.id}</span>
-                    <span
-                      className={[
-                        "font-mono text-[8px] tracking-[0.16em] uppercase border px-1 py-0.5 leading-none",
-                        isDark ? "border-white/30 group-hover:border-white" : "border-black group-hover:border-white group-hover:text-white",
-                      ].join(" ")}
-                    >
-                      {idx < currentProjects.length ? "● Active" : "◆ Archive"}
-                    </span>
-                  </div>
-
-                  {/* title block — compact scales */}
-                  <div className={isFull ? "flex-1 min-w-0" : ""}>
-                    <h3
-                      className={[
-                        "font-display uppercase leading-[0.88] tracking-[-0.028em] mt-1.5",
-                        idx === 0 ? "text-[22px] lg:text-[26px] xl:text-[28px]" : idx === 4 ? "text-[18px] lg:text-[22px] xl:text-[24px]" : "text-[18px] lg:text-[22px] xl:text-[24px]",
-                        "group-hover:text-white",
-                      ].join(" ")}
-                    >
-                      {p.title}
-                    </h3>
-                    <div className="font-mono text-[9px] tracking-[0.12em] uppercase opacity-50 mt-1 group-hover:text-white/60 line-clamp-1">
-                      {p.award ?? (idx < currentProjects.length ? "Active build — in production" : "Completed")}
+          {/* HORIZONTAL SCROLL — 5 cards snap, fits one viewport, no vertical overflow */}
+          <div className="relative flex-1 min-h-0 flex flex-col">
+            <div className="flex gap-px bg-black border-[3px] border-black overflow-x-auto snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth flex-1">
+              {[...currentProjects, ...pastProjects].map((p, idx) => {
+                const isDark = idx % 2 === 1;
+                return (
+                  <div
+                    key={p.id}
+                    className={[
+                      "group relative flex flex-col p-4 lg:p-5 flex-shrink-0 w-[84vw] sm:w-[340px] lg:w-[360px] xl:w-[380px] snap-start overflow-hidden",
+                      isDark ? "bg-black text-white" : "bg-white text-black",
+                      "hover:!bg-black hover:!text-white transition-colors",
+                    ].join(" ")}
+                  >
+                    {/* top meta */}
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-[9px] tracking-[0.16em] uppercase opacity-40 group-hover:text-white/60">0{idx + 1} — {p.id}</span>
+                      <span
+                        className={[
+                          "font-mono text-[8px] tracking-[0.16em] uppercase border px-1 py-0.5 leading-none",
+                          isDark ? "border-white/30 group-hover:border-white" : "border-black group-hover:border-white group-hover:text-white",
+                        ].join(" ")}
+                      >
+                        {idx < currentProjects.length ? "● Active" : "◆ Archive"}
+                      </span>
                     </div>
-                    <p
-                      className={[
-                        "font-sans leading-[1.45] opacity-70 group-hover:text-white/75 mt-1.5",
-                        isFull ? "text-[11px] lg:text-[12px] max-w-[52ch] line-clamp-2" : "text-[11px] lg:text-[12px] line-clamp-2 max-w-[48ch]",
-                      ].join(" ")}
-                    >
-                      {p.description}
-                    </p>
-                  </div>
 
-                  {/* tags + arrow footer */}
-                  <div className={isFull ? "flex flex-col justify-between lg:w-[280px] flex-shrink-0 lg:border-l lg:border-white/10 lg:pl-4 pt-2 lg:pt-0 gap-2" : "mt-auto pt-2 flex flex-col gap-2"}>
-                    <div className="flex flex-wrap gap-1 content-start">
-                      {p.tags.slice(0, isFull ? 6 : 4).map((t) => (
-                        <span
-                          key={t}
-                          className={[
-                            "font-mono text-[8px] tracking-wide border px-1 py-0.5 leading-none",
-                            isDark ? "border-white/20 group-hover:border-white/30" : "border-black/15 group-hover:border-white/20 group-hover:text-white",
-                          ].join(" ")}
-                        >
-                          {t}
-                        </span>
-                      ))}
-                      {p.tags.length > (isFull ? 6 : 4) && <span className="font-mono text-[8px] opacity-40 self-center">+{p.tags.length - (isFull ? 6 : 4)}</span>}
+                    {/* title block */}
+                    <div className="flex-1 min-h-0 flex flex-col">
+                      <h3 className="font-display uppercase leading-[0.88] tracking-[-0.028em] mt-3 text-[24px] lg:text-[28px] group-hover:text-white">{p.title}</h3>
+                      <div className="font-mono text-[9px] tracking-[0.12em] uppercase opacity-50 mt-1.5 group-hover:text-white/60 line-clamp-1">
+                        {p.award ?? (idx < currentProjects.length ? "Active build — in production" : "Completed")}
+                      </div>
+                      <p className="font-sans text-[12px] leading-[1.5] opacity-70 group-hover:text-white/75 mt-3 line-clamp-4">{p.description}</p>
+                      <div className="mt-4 flex flex-wrap gap-1 content-start">
+                        {p.tags.slice(0, 5).map((t) => (
+                          <span
+                            key={t}
+                            className={[
+                              "font-mono text-[8px] tracking-wide border px-1 py-0.5 leading-none",
+                              isDark ? "border-white/20 group-hover:border-white/30" : "border-black/15 group-hover:border-white/20 group-hover:text-white",
+                            ].join(" ")}
+                          >
+                            {t}
+                          </span>
+                        ))}
+                        {p.tags.length > 5 && <span className="font-mono text-[8px] opacity-40 self-center">+{p.tags.length - 5}</span>}
+                      </div>
                     </div>
-                    <div className="flex items-end justify-between gap-2">
+
+                    {/* footer */}
+                    <div className="mt-auto pt-4 flex flex-col gap-3">
                       <div className="flex flex-wrap gap-1.5">
                         {p.links.length ? (
                           p.links.slice(0, 2).map((l) => (
@@ -382,43 +362,55 @@ const BrowseMode: React.FC = () => {
                           <span className="font-mono text-[9px] tracking-wide uppercase opacity-30 group-hover:text-white/50">Private build</span>
                         )}
                       </div>
-                      {p.links[0]?.url ? (
-                        <a
-                          href={p.links[0].url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={[
-                            "w-7 h-7 border-[2px] flex items-center justify-center text-[12px] leading-none flex-shrink-0 transition-colors",
-                            isDark ? "border-white bg-white text-black group-hover:bg-white" : "border-black group-hover:border-white group-hover:bg-white group-hover:text-black",
-                          ].join(" ")}
-                        >
-                          →
-                        </a>
-                      ) : (
-                        <span
-                          className={[
-                            "w-7 h-7 border-[2px] flex items-center justify-center text-[12px] leading-none flex-shrink-0 opacity-20 group-hover:opacity-100",
-                            isDark ? "border-white/40" : "border-black/20 group-hover:border-white/40",
-                          ].join(" ")}
-                        >
-                          →
-                        </span>
-                      )}
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono text-[9px] tracking-[0.12em] uppercase opacity-30">0{idx + 1} / 05</span>
+                        {p.links[0]?.url ? (
+                          <a
+                            href={p.links[0].url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={[
+                              "w-7 h-7 border-[2px] flex items-center justify-center text-[12px] leading-none flex-shrink-0 transition-colors",
+                              isDark ? "border-white bg-white text-black" : "border-black group-hover:border-white group-hover:bg-white group-hover:text-black",
+                            ].join(" ")}
+                          >
+                            →
+                          </a>
+                        ) : (
+                          <span
+                            className={[
+                              "w-7 h-7 border-[2px] flex items-center justify-center text-[12px] leading-none flex-shrink-0 opacity-20 group-hover:opacity-100",
+                              isDark ? "border-white/40" : "border-black/20 group-hover:border-white/40",
+                            ].join(" ")}
+                          >
+                            →
+                          </span>
+                        )}
+                      </div>
                     </div>
-                  </div>
 
-                  {/* corner index */}
-                  <span
-                    className={[
-                      "absolute top-0 right-0 font-mono text-[9px] tracking-[0.14em] px-1.5 py-1 leading-none border-l border-b",
-                      isDark ? "bg-white text-black border-black" : "bg-black text-white border-black group-hover:bg-white group-hover:text-black group-hover:border-white",
-                    ].join(" ")}
-                  >
-                    0{idx + 1}
-                  </span>
-                </div>
-              );
-            })}
+                    {/* corner index */}
+                    <span
+                      className={[
+                        "absolute top-0 right-0 font-mono text-[9px] tracking-[0.14em] px-1.5 py-1 leading-none border-l border-b",
+                        isDark ? "bg-white text-black border-black" : "bg-black text-white border-black group-hover:bg-white group-hover:text-black group-hover:border-white",
+                      ].join(" ")}
+                    >
+                      0{idx + 1}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="flex items-center justify-between mt-2 font-mono text-[9px] tracking-[0.12em] uppercase opacity-40">
+              <span className="hidden sm:inline">← Drag or scroll →</span>
+              <span className="sm:hidden">Swipe →</span>
+              <div className="flex gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <span key={i} className="w-6 h-1 border border-black bg-black opacity-20 first:opacity-100" />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </motion.section>
