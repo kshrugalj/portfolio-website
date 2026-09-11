@@ -262,35 +262,35 @@ const BrowseMode: React.FC = () => {
         </div>
       </motion.section>
 
-      {/* ─── SELECTED PROJECTS — bento + split editorial, irregular tiles — full screen ─── */}
+      {/* ─── SELECTED PROJECTS — bento compact, fits one viewport ─── */}
       <motion.section
         id="projects"
         initial={{ y: 80, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-20 bg-white border-b-[3px] border-black min-h-[100dvh] flex flex-col justify-center py-8 lg:py-0"
+        className="relative z-20 bg-white border-b-[3px] border-black h-[100dvh] min-h-[100dvh] flex flex-col justify-center overflow-hidden py-0"
       >
-        <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-10 lg:py-16 w-full">
-          <div className="flex flex-wrap items-end justify-between gap-3 border-b-[3px] border-black pb-3">
+        <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-4 lg:py-5 w-full flex flex-col justify-center flex-1 min-h-0">
+          <div className="flex flex-wrap items-end justify-between gap-3 border-b-[3px] border-black pb-2">
             <div className="flex items-baseline gap-3">
               <span className="font-mono text-[10px] tracking-[0.18em] uppercase opacity-40">02 — Works</span>
-              <h2 className="font-display text-[22px] md:text-[28px] leading-none tracking-[-0.02em] uppercase">Selected Projects</h2>
+              <h2 className="font-display text-[20px] md:text-[24px] leading-none tracking-[-0.02em] uppercase">Selected Projects</h2>
             </div>
             <span className="font-mono text-[10px] tracking-[0.14em] uppercase opacity-50 hidden sm:inline">{totalProjects} builds · 2024 — 2026</span>
           </div>
-          <div className="flex flex-wrap items-center gap-2 mt-3 mb-6">
+          <div className="flex flex-wrap items-center gap-1.5 mt-2 mb-3">
             <span className="font-mono text-[10px] tracking-[0.12em] uppercase opacity-40 mr-1">Filter —</span>
-            <span className="font-mono text-[10px] tracking-[0.12em] uppercase bg-black text-white px-2.5 py-1 border-[2px] border-black">All 05</span>
-            <span className="font-mono text-[10px] tracking-[0.12em] uppercase border-[2px] border-black px-2.5 py-1 bg-white opacity-60">Active 03</span>
-            <span className="font-mono text-[10px] tracking-[0.12em] uppercase border-[2px] border-black px-2.5 py-1 bg-white opacity-60">Archive 02</span>
+            <span className="font-mono text-[9px] tracking-[0.12em] uppercase bg-black text-white px-2 py-0.5 border-[2px] border-black">All 05</span>
+            <span className="font-mono text-[9px] tracking-[0.12em] uppercase border-[2px] border-black px-2 py-0.5 bg-white opacity-60">Active 03</span>
+            <span className="font-mono text-[9px] tracking-[0.12em] uppercase border-[2px] border-black px-2 py-0.5 bg-white opacity-60">Archive 02</span>
             <a href={profile.github} target="_blank" rel="noopener noreferrer" className="ml-auto font-mono text-[10px] tracking-wide underline underline-offset-4 decoration-black/20 hover:decoration-black hidden sm:inline">
               github.com/kshrugalj →
             </a>
           </div>
 
-          {/* BENTO GRID — irregular spans via 12-col + gap-px trick */}
-          <div className="grid grid-cols-12 auto-rows-[280px] lg:auto-rows-[340px] gap-px bg-black border-[3px] border-black">
+          {/* BENTO GRID — compact: fits 3 rows in viewport */}
+          <div className="grid grid-cols-12 auto-rows-[148px] lg:auto-rows-[168px] xl:auto-rows-[188px] gap-px bg-black border-[3px] border-black flex-1 min-h-0">
             {[...currentProjects, ...pastProjects].map((p, idx) => {
               // irregular spans: 8/4, 5/7, 12 — creates bento rhythm for 5 items
               const spans = ["lg:col-span-8", "lg:col-span-4", "lg:col-span-5", "lg:col-span-7", "lg:col-span-12"] as const;
@@ -300,19 +300,19 @@ const BrowseMode: React.FC = () => {
                 <div
                   key={p.id}
                   className={[
-                    "group relative flex flex-col p-5 lg:p-7 col-span-12",
+                    "group relative flex flex-col p-3 lg:p-4 xl:p-5 col-span-12 overflow-hidden",
                     spans[idx] ?? "lg:col-span-6",
                     isDark ? "bg-black text-white" : "bg-white text-black",
                     "hover:!bg-black hover:!text-white transition-colors",
-                    isFull ? "lg:flex-row lg:items-stretch gap-6" : "",
+                    isFull ? "lg:flex-row lg:items-stretch gap-4" : "",
                   ].join(" ")}
                 >
                   {/* top meta */}
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-[10px] tracking-[0.16em] uppercase opacity-40 group-hover:text-white/60">0{idx + 1} — {p.id}</span>
+                    <span className="font-mono text-[9px] tracking-[0.16em] uppercase opacity-40 group-hover:text-white/60">0{idx + 1} — {p.id}</span>
                     <span
                       className={[
-                        "font-mono text-[9px] tracking-[0.16em] uppercase border px-1.5 py-0.5 leading-none",
+                        "font-mono text-[8px] tracking-[0.16em] uppercase border px-1 py-0.5 leading-none",
                         isDark ? "border-white/30 group-hover:border-white" : "border-black group-hover:border-white group-hover:text-white",
                       ].join(" ")}
                     >
@@ -320,24 +320,24 @@ const BrowseMode: React.FC = () => {
                     </span>
                   </div>
 
-                  {/* title block — scales with tile size */}
+                  {/* title block — compact scales */}
                   <div className={isFull ? "flex-1 min-w-0" : ""}>
                     <h3
                       className={[
-                        "font-display uppercase leading-[0.88] tracking-[-0.028em] mt-3",
-                        idx === 0 ? "text-[32px] lg:text-[44px]" : idx === 4 ? "text-[28px] lg:text-[36px]" : "text-[28px] lg:text-[34px]",
+                        "font-display uppercase leading-[0.88] tracking-[-0.028em] mt-1.5",
+                        idx === 0 ? "text-[22px] lg:text-[26px] xl:text-[28px]" : idx === 4 ? "text-[18px] lg:text-[22px] xl:text-[24px]" : "text-[18px] lg:text-[22px] xl:text-[24px]",
                         "group-hover:text-white",
                       ].join(" ")}
                     >
                       {p.title}
                     </h3>
-                    <div className="font-mono text-[10px] tracking-[0.12em] uppercase opacity-50 mt-2 group-hover:text-white/60 line-clamp-1">
+                    <div className="font-mono text-[9px] tracking-[0.12em] uppercase opacity-50 mt-1 group-hover:text-white/60 line-clamp-1">
                       {p.award ?? (idx < currentProjects.length ? "Active build — in production" : "Completed")}
                     </div>
                     <p
                       className={[
-                        "font-sans leading-[1.55] opacity-70 group-hover:text-white/75 mt-3",
-                        isFull ? "text-[13px] max-w-[52ch]" : "text-[13px] line-clamp-3 max-w-[48ch]",
+                        "font-sans leading-[1.45] opacity-70 group-hover:text-white/75 mt-1.5",
+                        isFull ? "text-[11px] lg:text-[12px] max-w-[52ch] line-clamp-2" : "text-[11px] lg:text-[12px] line-clamp-2 max-w-[48ch]",
                       ].join(" ")}
                     >
                       {p.description}
@@ -345,23 +345,23 @@ const BrowseMode: React.FC = () => {
                   </div>
 
                   {/* tags + arrow footer */}
-                  <div className={isFull ? "flex flex-col justify-between lg:w-[320px] flex-shrink-0 lg:border-l lg:border-white/10 lg:pl-6 pt-4 lg:pt-0 gap-4" : "mt-auto pt-5 flex flex-col gap-4"}>
-                    <div className="flex flex-wrap gap-1.5 content-start">
-                      {p.tags.slice(0, isFull ? 8 : 5).map((t) => (
+                  <div className={isFull ? "flex flex-col justify-between lg:w-[280px] flex-shrink-0 lg:border-l lg:border-white/10 lg:pl-4 pt-2 lg:pt-0 gap-2" : "mt-auto pt-2 flex flex-col gap-2"}>
+                    <div className="flex flex-wrap gap-1 content-start">
+                      {p.tags.slice(0, isFull ? 6 : 4).map((t) => (
                         <span
                           key={t}
                           className={[
-                            "font-mono text-[9px] tracking-wide border px-1.5 py-0.5 leading-none",
+                            "font-mono text-[8px] tracking-wide border px-1 py-0.5 leading-none",
                             isDark ? "border-white/20 group-hover:border-white/30" : "border-black/15 group-hover:border-white/20 group-hover:text-white",
                           ].join(" ")}
                         >
                           {t}
                         </span>
                       ))}
-                      {p.tags.length > (isFull ? 8 : 5) && <span className="font-mono text-[9px] opacity-40 self-center">+{p.tags.length - (isFull ? 8 : 5)}</span>}
+                      {p.tags.length > (isFull ? 6 : 4) && <span className="font-mono text-[8px] opacity-40 self-center">+{p.tags.length - (isFull ? 6 : 4)}</span>}
                     </div>
-                    <div className="flex items-end justify-between gap-3">
-                      <div className="flex flex-wrap gap-2">
+                    <div className="flex items-end justify-between gap-2">
+                      <div className="flex flex-wrap gap-1.5">
                         {p.links.length ? (
                           p.links.slice(0, 2).map((l) => (
                             <a
@@ -371,7 +371,7 @@ const BrowseMode: React.FC = () => {
                               rel="noopener noreferrer"
                               onClick={(e) => e.stopPropagation()}
                               className={[
-                                "font-mono text-[10px] tracking-[0.08em] uppercase underline underline-offset-4 decoration-1 hover:no-underline",
+                                "font-mono text-[9px] tracking-[0.08em] uppercase underline underline-offset-4 decoration-1 hover:no-underline",
                                 isDark ? "text-white decoration-white/30 group-hover:decoration-white/50" : "text-[#0000FF] group-hover:text-white group-hover:decoration-white/40",
                               ].join(" ")}
                             >
@@ -379,7 +379,7 @@ const BrowseMode: React.FC = () => {
                             </a>
                           ))
                         ) : (
-                          <span className="font-mono text-[10px] tracking-wide uppercase opacity-30 group-hover:text-white/50">Private build</span>
+                          <span className="font-mono text-[9px] tracking-wide uppercase opacity-30 group-hover:text-white/50">Private build</span>
                         )}
                       </div>
                       {p.links[0]?.url ? (
@@ -388,7 +388,7 @@ const BrowseMode: React.FC = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                           className={[
-                            "w-9 h-9 border-[2px] flex items-center justify-center text-[14px] leading-none flex-shrink-0 transition-colors",
+                            "w-7 h-7 border-[2px] flex items-center justify-center text-[12px] leading-none flex-shrink-0 transition-colors",
                             isDark ? "border-white bg-white text-black group-hover:bg-white" : "border-black group-hover:border-white group-hover:bg-white group-hover:text-black",
                           ].join(" ")}
                         >
@@ -397,7 +397,7 @@ const BrowseMode: React.FC = () => {
                       ) : (
                         <span
                           className={[
-                            "w-9 h-9 border-[2px] flex items-center justify-center text-[14px] leading-none flex-shrink-0 opacity-20 group-hover:opacity-100",
+                            "w-7 h-7 border-[2px] flex items-center justify-center text-[12px] leading-none flex-shrink-0 opacity-20 group-hover:opacity-100",
                             isDark ? "border-white/40" : "border-black/20 group-hover:border-white/40",
                           ].join(" ")}
                         >
