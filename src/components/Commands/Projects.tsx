@@ -12,7 +12,9 @@ const ProjectDetail: React.FC<{ project: Project }> = ({ project }) => {
   return (
     <div className="space-y-2 mt-2 pl-4 border-l border-term-border-active">
       <div className="text-term-text font-bold"># {project.title}</div>
-      {project.award && <div className="text-term-yellow text-xs">&gt; award: {project.award}</div>}
+      {project.awards?.map((award) => (
+        <div key={award} className="text-term-yellow text-xs">&gt; award: {award}</div>
+      ))}
       {project.status === "active" && <StatusBadge active label="In Development" />}
       <div className="text-term-muted mt-2">{project.description}</div>
       {project.tags.length > 0 && (
@@ -62,7 +64,12 @@ const Projects: React.FC<ProjectsProps> = ({ args }) => {
               >
                 <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: project.status === "active" ? "#03dac6" : "#5c6773" }} />
                 <span className="text-term-blue hover:underline">{project.title}</span>
-                {project.award && <span className="text-term-dim text-xs hidden sm:inline">— {project.award}</span>}
+                {project.awards && project.awards.length > 0 && (
+                  <span className="text-term-dim text-xs hidden sm:inline">
+                    — {project.awards[0]}
+                    {project.awards.length > 1 ? ` +${project.awards.length - 1}` : ""}
+                  </span>
+                )}
               </button>
               {expandedProject === project.id && <ProjectDetail project={project} />}
             </div>

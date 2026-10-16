@@ -19,7 +19,7 @@ export interface Project {
   id: string;
   title: string;
   status: "active" | "completed";
-  award?: string;
+  awards?: string[];
   description: string;
   tags: string[];
   links: { label: string; url: string }[];
@@ -33,7 +33,10 @@ export const currentProjects: Project[] = [
     description:
       "AI job discovery platform across 111+ ATS boards with resume-to-role matching and one-click cover letter generation. Built with FastAPI, async httpx, Groq LLM and Firebase — 32–38s query time, zero rate-limit errors.",
     tags: ["Python", "FastAPI", "Next.js 16", "React 19", "TypeScript", "Firebase", "Groq LLM", "Pydantic v2"],
-    links: [],
+    links: [
+      { label: "Website", url: "https://careeros-sand.vercel.app/" },
+      { label: "GitHub", url: "https://github.com/kshrugalj/CareerOS" },
+    ],
   },
   {
     id: "vibetexting",
@@ -42,12 +45,19 @@ export const currentProjects: Project[] = [
     description:
       "100% local AI messaging assistant for 50+ iMessage threads — zero cloud API calls, 5-second polling. Python CLI with SQLite parsing, AppleScript delivery, few-shot vibe mimicry from 150+ messages, plus semantic memory with ChromaDB + LLaVA vision.",
     tags: ["Python", "FastAPI", "React", "ChromaDB", "Ollama", "SQLite", "AppleScript", "LLaVA", "Tailwind CSS"],
-    links: [],
+    links: [
+      { label: "Video Demo", url: "https://youtu.be/SUYYwpTQKf8?si=yyvlE41s9BeDR-7W" },
+      { label: "GitHub", url: "https://github.com/kshrugalj/VibeTexting" },
+    ],
   },
+];
+
+export const pastProjects: Project[] = [
   {
     id: "recall",
     title: "Recall",
-    status: "active",
+    status: "completed",
+    awards: ["4th Place — HogHacks 2026"],
     description:
       "Gamifying music education to make mastering instruments immersive. A smart platform that transforms music theory into an engaging, game-like experience.",
     tags: ["NestJS", "TypeScript", "PostgreSQL", "Redis", "Socket.IO", "Nuxt 4", "Vue 3", "Tailwind CSS", "Pinia", "JWT"],
@@ -56,14 +66,14 @@ export const currentProjects: Project[] = [
       { label: "LinkedIn", url: "https://www.linkedin.com/company/playrecall/" },
     ],
   },
-];
-
-export const pastProjects: Project[] = [
   {
     id: "admitx",
     title: "AdmitX",
     status: "completed",
-    award: "Qualifier @ NexHacks 2026",
+    awards: [
+      "Qualifier @ NexHacks 2026",
+      "Top 25 at VibeCon (YC x AWS x Emergent) Hackathon",
+    ],
     description:
       "An AI-driven college advising platform built at NexHacks, a highly selective 24-hour hackathon at Carnegie Mellon University.",
     tags: ["Claude", "DevSwarm", "Groq", "LiveKit", "Python", "React", "SQL", "Supabase", "TypeScript"],
@@ -77,7 +87,7 @@ export const pastProjects: Project[] = [
     id: "chakraclash",
     title: "ChakraClash",
     status: "completed",
-    award: "4th Place & Best Implementation — HogHacks 2025",
+    awards: ["4th Place & Best Implementation — HogHacks 2025"],
     description:
       "A real-time competitive Yoga ranking app that uses a custom machine vision model to score yoga poses.",
     tags: ["Deno", "Flutter", "Python", "TensorFlow", "OpenCV", "WebSockets"],

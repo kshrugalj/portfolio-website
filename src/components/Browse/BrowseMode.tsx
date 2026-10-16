@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { profile, stats, currentProjects, pastProjects, experiences, education } from "../../data/content";
+import { profile, stats, currentProjects, pastProjects, experiences, education, competitions } from "../../data/content";
 
 // ─── RawBlock platform logos — monochrome, square, 2px border, hover inversion ───
 const PlatformIcon: React.FC<{ label: string }> = ({ label }) => {
@@ -54,6 +54,22 @@ const PlatformIcon: React.FC<{ label: string }> = ({ label }) => {
     </svg>
   );
 };
+
+// ─── Skills — RawBlock chips, 2px border, hover inversion ───
+const skills = [
+  "Web Design",
+  "UI/UX Design",
+  "TypeScript",
+  "React / Next.js",
+  "Figma",
+  "Framer",
+  "Tailwind CSS",
+  "Python",
+  "FastAPI",
+  "Firebase",
+  "GSAP Animation",
+  "SEO Basics",
+];
 
 const BrowseMode: React.FC = () => {
   const [expandedIdx, setExpandedIdx] = useState<number | null>(0);
@@ -179,8 +195,9 @@ const BrowseMode: React.FC = () => {
             <div className="opacity-60">Digital Creator</div>
           </div>
           <div className="hidden md:flex items-center gap-8 font-mono text-[10px] tracking-[0.14em] uppercase">
-            <a href="#projects" className="hover:underline underline-offset-4">Projects</a>
+            <a href="#education" className="hover:underline underline-offset-4">Education</a>
             <a href="#experience" className="hover:underline underline-offset-4">Experience</a>
+            <a href="#projects" className="hover:underline underline-offset-4">Projects</a>
             <a href="#contact" className="hover:underline underline-offset-4">Contact</a>
           </div>
           <div className="flex items-center gap-3">
@@ -319,6 +336,209 @@ const BrowseMode: React.FC = () => {
         </div>
       </motion.section>
 
+      {/* ─── EDUCATION — ledger, skills, competitions ─── */}
+      <motion.section
+        id="education"
+        initial={{ y: 60, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-20 bg-white border-b-[3px] border-black"
+      >
+        <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-10 md:py-16">
+          <div className="flex flex-wrap items-end justify-between gap-3 border-b-[3px] border-black pb-3">
+            <div className="flex items-baseline gap-3">
+              <span className="font-mono text-[10px] tracking-[0.18em] uppercase opacity-40">02 — Education</span>
+              <h2 className="font-display text-[22px] md:text-[28px] leading-none tracking-[-0.02em] uppercase">Education</h2>
+            </div>
+            <span className="font-mono text-[10px] tracking-[0.14em] uppercase opacity-50">
+              {education.length} programs · {skills.length} skills
+            </span>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-between gap-3 mt-3 mb-5">
+            <span className="font-mono text-[10px] tracking-[0.12em] uppercase opacity-40">{profile.education}</span>
+            <span className="font-mono text-[10px] tracking-[0.12em] uppercase opacity-40">2022 — 2029</span>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 lg:divide-x-[3px] lg:divide-black border-[3px] border-black">
+            {/* ─── LEFT — the ledger ─── */}
+            <div className="lg:col-span-7 p-4 md:p-6">
+              <div className="font-mono text-[10px] tracking-[0.14em] uppercase opacity-40 mb-4">Programs — {education.length}</div>
+              <div className="flex flex-col gap-4">
+                {education.map((e) => (
+                  <div key={e.degree} className="border-l-[3px] border-black pl-3 py-0.5">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="font-sans text-[14px] font-bold leading-tight">{e.degree}</div>
+                      <span className="font-mono text-[10px] whitespace-nowrap opacity-50 flex-shrink-0 pt-0.5">{e.period}</span>
+                    </div>
+                    <a href={e.link} target="_blank" rel="noopener noreferrer" className="font-mono text-[11px] text-[#0000FF] hover:underline underline-offset-4">
+                      {e.school}
+                    </a>
+                    <div className="font-sans text-[12px] leading-snug opacity-60 mt-1 max-w-[68ch]">{e.description}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* ─── RIGHT — skills, then every competition ─── */}
+            <div className="lg:col-span-5 border-t-[3px] lg:border-t-0 border-black">
+              <div className="p-4 md:p-6">
+                <div className="font-mono text-[10px] tracking-[0.14em] uppercase opacity-40 mb-3">Skills — {skills.length}</div>
+                <div className="flex flex-wrap gap-1.5">
+                  {skills.map((s) => (
+                    <span
+                      key={s}
+                      className="font-mono text-[10px] tracking-[0.08em] uppercase border-[2px] border-black px-2 py-1 bg-white hover:bg-black hover:text-white transition-colors cursor-default"
+                    >
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-4 md:p-6 border-t-[3px] border-black">
+                <div className="font-mono text-[10px] tracking-[0.14em] uppercase opacity-40 mb-3">Competitions & Awards — {competitions.length}</div>
+                <div className="border-[2px] border-black divide-y-[2px] divide-black">
+                  {competitions.map((c) => (
+                    <div key={c.title + c.date} className="flex items-baseline gap-3 px-3 py-2">
+                      <span className="font-mono text-[10px] tracking-[0.1em] uppercase opacity-40 flex-shrink-0 w-[54px]">{c.date}</span>
+                      <span className="font-sans text-[12px] leading-snug flex-1 min-w-0">{c.title}</span>
+                      <span className="font-mono text-[10px] tracking-[0.08em] uppercase opacity-70 flex-shrink-0">{c.award}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* ─── EXPERIENCE — each role expands in place ─── */}
+      <motion.section
+        id="experience"
+        initial={{ y: 60, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-20 bg-white border-b-[3px] border-black"
+      >
+        <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-10 md:py-16">
+          <div className="flex flex-wrap items-end justify-between gap-3 border-b-[3px] border-black pb-3">
+            <div className="flex items-baseline gap-3">
+              <span className="font-mono text-[10px] tracking-[0.18em] uppercase opacity-40">03 — Experience</span>
+              <h2 className="font-display text-[22px] md:text-[28px] leading-none tracking-[-0.02em] uppercase">Experience</h2>
+            </div>
+            <span className="font-mono text-[10px] tracking-[0.14em] uppercase opacity-50">{experiences.length} roles · 2025 — 2026</span>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-between gap-3 mt-3 mb-5">
+            <span className="font-mono text-[10px] tracking-[0.12em] uppercase opacity-40">Expand a role for the detail</span>
+            <a
+              href={profile.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-[10px] tracking-wide underline underline-offset-4 decoration-black/20 hover:decoration-black"
+            >
+              linkedin.com/in/kshrugalj →
+            </a>
+          </div>
+
+          <div className="border-[3px] border-black divide-y-[3px] divide-black">
+            {experiences.map((e, i) => {
+              const isOpen = expandedIdx === i;
+              const hasBullets = !!e.bullets?.length;
+              const hasLink = !!e.link && e.link !== "#";
+              return (
+                <div key={e.company + i} className="bg-white">
+                  <div
+                    onClick={() => hasBullets && setExpandedIdx(isOpen ? null : i)}
+                    className={[
+                      "group flex items-center gap-3 md:gap-4 px-4 md:px-6 py-4 md:py-5 transition-colors",
+                      hasBullets ? "cursor-pointer" : "",
+                      isOpen ? "bg-black text-white" : "bg-white text-black hover:bg-black hover:text-white",
+                    ].join(" ")}
+                  >
+                    <span className="font-mono text-[11px] tabular-nums opacity-40 flex-shrink-0 w-5 group-hover:opacity-60">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-display uppercase leading-none tracking-[-0.02em] text-[16px] md:text-[20px] truncate">{e.title}</h3>
+                      <div className="mt-1.5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                        {hasLink ? (
+                          <a
+                            href={e.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(ev) => ev.stopPropagation()}
+                            className="font-mono text-[11px] text-[#0000FF] group-hover:text-white underline underline-offset-4 decoration-1"
+                          >
+                            {e.company} ↗
+                          </a>
+                        ) : (
+                          <span className="font-mono text-[11px] group-hover:text-white/80">{e.company}</span>
+                        )}
+                        <span className="font-mono text-[10px] tracking-[0.12em] uppercase opacity-50 group-hover:opacity-70 lg:hidden">{e.period}</span>
+                      </div>
+                    </div>
+
+                    <span className="hidden lg:inline font-mono text-[10px] tracking-[0.12em] uppercase opacity-40 flex-shrink-0 group-hover:opacity-60">
+                      {e.period}
+                    </span>
+
+                    {hasBullets && (
+                      <button
+                        type="button"
+                        onClick={(ev) => {
+                          ev.stopPropagation();
+                          setExpandedIdx(isOpen ? null : i);
+                        }}
+                        aria-expanded={isOpen}
+                        aria-controls={`role-panel-${i}`}
+                        aria-label={`${isOpen ? "Collapse" : "Expand"} ${e.title} at ${e.company}`}
+                        className={[
+                          "w-8 h-8 border-[2px] flex items-center justify-center flex-shrink-0 text-[12px] transition-transform",
+                          isOpen ? "border-white bg-white text-black rotate-90" : "border-black group-hover:border-white group-hover:text-white",
+                        ].join(" ")}
+                      >
+                        ▸
+                      </button>
+                    )}
+                  </div>
+
+                  <AnimatePresence initial={false}>
+                    {hasBullets && isOpen && (
+                      <motion.div
+                        key={`role-panel-${i}`}
+                        id={`role-panel-${i}`}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                        className="overflow-hidden bg-white text-black border-t-[3px] border-black"
+                      >
+                        <div className="px-4 md:px-6 py-5">
+                          <p className="font-sans text-[13px] md:text-[14px] leading-[1.65] text-black/70 max-w-[80ch]">{e.description}</p>
+                          <ul className="mt-4 flex flex-col gap-3">
+                            {e.bullets!.map((b, bi) => (
+                              <li key={bi} className="flex gap-3 font-sans text-[13px] md:text-[14px] leading-[1.65]">
+                                <span className="mt-[8px] w-1.5 h-1.5 bg-black flex-shrink-0" aria-hidden />
+                                <span className="max-w-[88ch]">{b}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </motion.section>
+
       {/* ─── SELECTED PROJECTS — archive list, each row expands in place ─── */}
       <motion.section
         id="projects"
@@ -331,7 +551,7 @@ const BrowseMode: React.FC = () => {
         <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-10 md:py-16">
           <div className="flex flex-wrap items-end justify-between gap-3 border-b-[3px] border-black pb-3">
             <div className="flex items-baseline gap-3">
-              <span className="font-mono text-[10px] tracking-[0.18em] uppercase opacity-40">02 — Works</span>
+              <span className="font-mono text-[10px] tracking-[0.18em] uppercase opacity-40">04 — Works</span>
               <h2 className="font-display text-[22px] md:text-[28px] leading-none tracking-[-0.02em] uppercase">Selected Projects</h2>
             </div>
             <span className="font-mono text-[10px] tracking-[0.14em] uppercase opacity-50">
@@ -389,9 +609,10 @@ const BrowseMode: React.FC = () => {
 
                     <span className="flex-1 min-w-0 flex flex-col md:flex-row md:items-baseline gap-1 md:gap-3">
                       <h3 className="font-display uppercase leading-none tracking-[-0.02em] text-[17px] md:text-[21px] truncate">{p.title}</h3>
-                      {p.award && (
-                        <span className="hidden md:inline font-mono text-[10px] tracking-[0.1em] uppercase leading-none opacity-50 group-hover:opacity-80 border-l-[2px] border-raw-orange pl-3 truncate max-w-[220px] lg:max-w-[320px]">
-                          {p.award}
+                      {!!p.awards?.length && (
+                        <span className="hidden md:flex items-baseline gap-2 min-w-0 max-w-[240px] lg:max-w-[440px] border-l-[2px] border-raw-orange pl-3 font-mono text-[10px] tracking-[0.1em] uppercase leading-none opacity-50 group-hover:opacity-80">
+                          <span className="truncate">{p.awards[0]}</span>
+                          {p.awards.length > 1 && <span className="flex-shrink-0 opacity-70">+{p.awards.length - 1}</span>}
                         </span>
                       )}
                     </span>
@@ -429,12 +650,16 @@ const BrowseMode: React.FC = () => {
                         <div className="grid grid-cols-1 lg:grid-cols-12 border-t-[3px] border-black">
                           {/* left — what it is, the award, the whole stack */}
                           <div className="lg:col-span-8 p-4 md:p-6 border-b-[3px] lg:border-b-0 lg:border-r-[3px] border-black">
-                            {p.award && (
-                              <div className="border-[3px] border-black mb-5">
-                                <div className="bg-raw-orange text-black px-3 py-1.5 font-mono text-[10px] tracking-[0.16em] uppercase">
-                                  ◆ Award
-                                </div>
-                                <div className="px-3 py-2.5 font-sans text-[13px] font-semibold leading-snug">{p.award}</div>
+                            {!!p.awards?.length && (
+                              <div className="flex flex-col gap-2 mb-5">
+                                {p.awards.map((award, ai, all) => (
+                                  <div key={award} className="border-[3px] border-black">
+                                    <div className="bg-raw-orange text-black px-3 py-1.5 font-mono text-[10px] tracking-[0.16em] uppercase">
+                                      ◆ Award{all.length > 1 ? ` ${ai + 1}` : ""}
+                                    </div>
+                                    <div className="px-3 py-2.5 font-sans text-[13px] font-semibold leading-snug">{award}</div>
+                                  </div>
+                                ))}
                               </div>
                             )}
 
@@ -498,246 +723,6 @@ const BrowseMode: React.FC = () => {
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* ─── EDUCATION & SKILLS / WORK PROCESS / QUOTE — cinematic stagger — full screen ─── */}
-      <motion.section
-        initial={{ y: 60, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
-        className="relative z-20 bg-white border-b-[3px] border-black min-h-[100dvh] flex flex-col justify-center"
-      >
-        <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 lg:divide-x-[3px] lg:divide-black">
-          {/* EDUCATION & SKILLS */}
-          <div className="lg:col-span-4 p-4 md:p-6 border-b-[3px] lg:border-b-0 border-black">
-            <h2 className="font-display text-[13px] tracking-[0.08em] border-b-[3px] border-black pb-3 mb-5">Education & Skills</h2>
-
-            <div className="space-y-4">
-              <div className="font-mono text-[10px] tracking-[0.12em] uppercase opacity-50">Education</div>
-              {education.slice(0, 3).map((e) => (
-                <div key={e.degree} className="border-l-[3px] border-black pl-3 py-1">
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="font-sans text-[12px] font-bold leading-tight">{e.degree}</div>
-                    <span className="font-mono text-[10px] whitespace-nowrap opacity-50">{e.period}</span>
-                  </div>
-                  <a href={e.link} target="_blank" rel="noopener noreferrer" className="font-mono text-[11px] text-[#0000FF] hover:underline underline-offset-4">
-                    {e.school}
-                  </a>
-                  <div className="font-sans text-[11px] leading-snug opacity-60 mt-1 line-clamp-2">{e.description}</div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-6">
-              <div className="font-mono text-[10px] tracking-[0.12em] uppercase opacity-50 mb-3">Skills</div>
-              <div className="flex flex-wrap gap-1.5">
-                {[
-                  "Web Design",
-                  "UI/UX Design",
-                  "TypeScript",
-                  "React / Next.js",
-                  "Figma",
-                  "Framer",
-                  "Tailwind CSS",
-                  "Python",
-                  "FastAPI",
-                  "Firebase",
-                  "GSAP Animation",
-                  "SEO Basics",
-                ].map((s) => (
-                  <span
-                    key={s}
-                    className="font-mono text-[10px] tracking-[0.08em] uppercase border-[2px] border-black px-2 py-1 bg-white hover:bg-black hover:text-white transition-colors cursor-default"
-                  >
-                    {s}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-6 pt-4 border-t border-black/10">
-              <div className="font-mono text-[10px] tracking-[0.12em] uppercase opacity-50 mb-2">Competitions</div>
-              <div className="space-y-2">
-                {[
-                  "1st Arvest Hackathon · 2024",
-                  "2nd Congressional App Challenge · 2025",
-                  "4th HogHacks — Best Implementation",
-                  "Qualifier — NexHacks @ CMU",
-                ].map((c) => (
-                  <div key={c} className="font-mono text-[11px] leading-none flex gap-2">
-                    <span>—</span>
-                    <span>{c}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* WORK PROCESS */}
-          <div className="lg:col-span-5 p-4 md:p-6 border-b-[3px] lg:border-b-0 border-black">
-            <h2 className="font-display text-[13px] tracking-[0.08em] border-b-[3px] border-black pb-3 mb-5">Work Process</h2>
-            <div className="space-y-4">
-              {[
-                {
-                  n: "01",
-                  title: "Discover",
-                  desc: "Understanding goals, audience, and project requirements.",
-                  icon: "◯",
-                },
-                {
-                  n: "02",
-                  title: "Ideate",
-                  desc: "Planning, wireframing, and creating the right concept.",
-                  icon: "◐",
-                },
-                {
-                  n: "03",
-                  title: "Design",
-                  desc: "Crafting visual design with a focus on user experience.",
-                  icon: "⬡",
-                },
-                {
-                  n: "04",
-                  title: "Develop",
-                  desc: "Building fast, responsive, and high-performing websites.",
-                  icon: "</>",
-                },
-                {
-                  n: "05",
-                  title: "Deliver",
-                  desc: "Testing, optimizing, and launching with perfection.",
-                  icon: "✈",
-                },
-              ].map((step) => (
-                <div key={step.n} className="flex gap-3 group">
-                  <div className="font-mono text-[11px] tracking-wide opacity-40 pt-2 w-6 flex-shrink-0">{step.n}</div>
-                  <div className="w-9 h-9 rounded-full border-[2px] border-black flex items-center justify-center flex-shrink-0 text-[12px] group-hover:bg-black group-hover:text-white transition-colors">
-                    {step.icon}
-                  </div>
-                  <div className="flex-1 min-w-0 border-b border-black/10 pb-4 group-last:border-b-0">
-                    <div className="font-display text-[12px] tracking-[0.04em] uppercase">{step.title}</div>
-                    <div className="font-sans text-[12px] leading-snug opacity-60 mt-1">{step.desc}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* QUOTE — inverted block like reference's deep red */}
-          <div className="lg:col-span-3 bg-black text-white p-6 md:p-8 flex flex-col justify-between min-h-[360px]">
-            <div>
-              <div className="font-display text-[36px] leading-none opacity-20">“</div>
-              <blockquote className="font-sans text-[15px] leading-[1.5] font-medium mt-2">
-                Good design is not just how it looks, but how it works.
-              </blockquote>
-              <div className="mt-6 font-script italic text-[18px] opacity-80" style={{ fontFamily: "'Instrument Serif', serif" }}>
-                Kshrugal
-              </div>
-            </div>
-            <div className="mt-10">
-              <div className="w-8 h-[2px] bg-white/30 mb-4" />
-              <div className="font-mono text-[10px] tracking-[0.16em] uppercase leading-tight opacity-70">
-                Let&apos;s create
-                <br />
-                something great
-                <br />
-                together.
-              </div>
-              <div className="mt-4 flex items-center gap-2 font-mono text-[10px] tracking-wide opacity-50">
-                <span>✦</span>
-                <span>Available for freelance</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.section>
-
-      {/* ─── EXPERIENCE (expandable — brutalist) — cinematic — full screen ─── */}
-      <motion.section
-        id="experience"
-        initial={{ y: 50, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-20 bg-white border-b-[3px] border-black min-h-[100dvh] flex flex-col justify-center"
-      >
-        <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-6 md:py-8">
-          <div className="flex items-baseline justify-between border-b-[3px] border-black pb-3 mb-6">
-            <h2 className="font-display text-[14px] md:text-[16px] tracking-[0.08em]">Experience</h2>
-            <span className="font-mono text-[10px] tracking-[0.12em] uppercase opacity-50">{experiences.length} roles</span>
-          </div>
-          <div className="border-[3px] border-black divide-y-[3px] divide-black">
-            {experiences.map((e, i) => {
-              const isExpanded = expandedIdx === i;
-              const hasBullets = !!e.bullets?.length;
-              return (
-                <div
-                  key={e.company + i}
-                  className={`bg-white ${hasBullets ? "cursor-pointer" : ""} hover:bg-black hover:text-white group transition-colors`}
-                  onClick={() => hasBullets && setExpandedIdx(isExpanded ? null : i)}
-                  role={hasBullets ? "button" : undefined}
-                  tabIndex={hasBullets ? 0 : undefined}
-                  onKeyDown={(ev) => {
-                    if (hasBullets && (ev.key === "Enter" || ev.key === " ")) {
-                      ev.preventDefault();
-                      setExpandedIdx(isExpanded ? null : i);
-                    }
-                  }}
-                >
-                  <div className="flex gap-4 p-4 md:p-5">
-                    <span className="hidden md:block font-mono text-[11px] tracking-wide opacity-50 w-[150px] flex-shrink-0 pt-0.5 group-hover:text-white/60">
-                      {e.period}
-                    </span>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-3">
-                        <div>
-                          <div className="font-display text-[13px] leading-none tracking-[0.02em] uppercase">{e.title}</div>
-                          <a
-                            href={e.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(ev) => ev.stopPropagation()}
-                            className="font-mono text-[11px] text-[#0000FF] group-hover:text-white underline underline-offset-4 decoration-1"
-                          >
-                            {e.company} ↗
-                          </a>
-                          <div className="md:hidden font-mono text-[10px] opacity-50 mt-1">{e.period}</div>
-                          <div className="font-sans text-[12px] leading-snug opacity-70 group-hover:opacity-80 mt-2 max-w-[64ch]">
-                            {e.description}
-                          </div>
-                        </div>
-                        {hasBullets && (
-                          <span
-                            className={`w-8 h-8 border-[2px] flex items-center justify-center flex-shrink-0 text-[12px] transition-transform ${isExpanded ? "bg-white text-black border-white rotate-90 group-hover:bg-white" : "border-black group-hover:border-white group-hover:text-white"}`}
-                            aria-hidden
-                          >
-                            ▸
-                          </span>
-                        )}
-                      </div>
-                      {hasBullets && isExpanded && (
-                        <ul className="mt-4 space-y-2 border-t-[3px] border-black group-hover:border-white pt-4">
-                          {e.bullets!.map((b, bi) => (
-                            <li key={bi} className="flex gap-3 font-sans text-[12px] leading-relaxed">
-                              <span className="mt-1 w-1.5 h-1.5 bg-black group-hover:bg-white flex-shrink-0" aria-hidden />
-                              <span className="opacity-80 group-hover:opacity-100">{b}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                      {hasBullets && !isExpanded && (
-                        <div className="font-mono text-[10px] tracking-[0.1em] uppercase opacity-30 group-hover:opacity-60 mt-3">
-                          Click to expand ▾
-                        </div>
-                      )}
-                    </div>
-                  </div>
                 </div>
               );
             })}
