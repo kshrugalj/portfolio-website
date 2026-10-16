@@ -57,6 +57,7 @@ const PlatformIcon: React.FC<{ label: string }> = ({ label }) => {
 
 const BrowseMode: React.FC = () => {
   const [expandedIdx, setExpandedIdx] = useState<number | null>(0);
+  const [openProjectIdx, setOpenProjectIdx] = useState<number | null>(0);
   const [showIntro, setShowIntro] = useState(true);
 
   useEffect(() => {
@@ -104,7 +105,10 @@ const BrowseMode: React.FC = () => {
     };
   }, [showIntro]);
 
-  const totalProjects = currentProjects.length + pastProjects.length;
+  const allProjects = [...currentProjects, ...pastProjects];
+  const totalProjects = allProjects.length;
+  const activeCount = allProjects.filter((p) => p.status === "active").length;
+  const archiveCount = totalProjects - activeCount;
 
   return (
     <div className="min-h-screen bg-white text-black selection:bg-black selection:text-white">
@@ -315,106 +319,185 @@ const BrowseMode: React.FC = () => {
         </div>
       </motion.section>
 
-      {/* ─── SELECTED PROJECTS — diptych compact, fits one viewport, titles single-line ─── */}
+      {/* ─── SELECTED PROJECTS — archive list, each row expands in place ─── */}
       <motion.section
         id="projects"
         initial={{ y: 80, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-20 bg-white border-b-[3px] border-black h-[100dvh] min-h-[100dvh] flex flex-col justify-center overflow-hidden py-0"
+        className="relative z-20 bg-white border-b-[3px] border-black"
       >
-        <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-4 lg:py-5 w-full flex flex-col flex-1 min-h-0 justify-center">
-          <div className="flex flex-wrap items-end justify-between gap-3 border-b-[3px] border-black pb-2">
+        <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-10 md:py-16">
+          <div className="flex flex-wrap items-end justify-between gap-3 border-b-[3px] border-black pb-3">
             <div className="flex items-baseline gap-3">
               <span className="font-mono text-[10px] tracking-[0.18em] uppercase opacity-40">02 — Works</span>
-              <h2 className="font-display text-[20px] md:text-[24px] leading-none tracking-[-0.02em] uppercase">Selected Projects</h2>
+              <h2 className="font-display text-[22px] md:text-[28px] leading-none tracking-[-0.02em] uppercase">Selected Projects</h2>
             </div>
-            <span className="font-mono text-[10px] tracking-[0.14em] uppercase opacity-50 hidden sm:inline">{totalProjects} builds · 2024 — 2026</span>
+            <span className="font-mono text-[10px] tracking-[0.14em] uppercase opacity-50">
+              {totalProjects} builds · {activeCount} active · {archiveCount} archive
+            </span>
           </div>
-          <div className="flex flex-wrap items-center gap-1.5 mt-2 mb-3">
-            <span className="font-mono text-[10px] tracking-[0.12em] uppercase opacity-40 mr-1">Filter —</span>
-            <span className="font-mono text-[9px] tracking-[0.12em] uppercase bg-black text-white px-2 py-0.5 border-[2px] border-black">All 05</span>
-            <span className="font-mono text-[9px] tracking-[0.12em] uppercase border-[2px] border-black px-2 py-0.5 bg-white opacity-60">Active 03</span>
-            <span className="font-mono text-[9px] tracking-[0.12em] uppercase border-[2px] border-black px-2 py-0.5 bg-white opacity-60">Archive 02</span>
-            <a href={profile.github} target="_blank" rel="noopener noreferrer" className="ml-auto font-mono text-[10px] tracking-wide underline underline-offset-4 decoration-black/20 hover:decoration-black hidden sm:inline">
+
+          <div className="flex flex-wrap items-center justify-between gap-3 mt-3 mb-5">
+            <span className="font-mono text-[10px] tracking-[0.12em] uppercase opacity-40">2024 — 2026 · expand a row for the full build</span>
+            <a
+              href={profile.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-[10px] tracking-wide underline underline-offset-4 decoration-black/20 hover:decoration-black"
+            >
               github.com/kshrugalj →
             </a>
           </div>
 
-          {/* SPLIT DIPTYCH — flex-1 rows, tight so 5 fit in viewport */}
-          <div className="border-[3px] border-black flex flex-col flex-1 min-h-0 divide-y-[3px] divide-black overflow-hidden">
-            {[...currentProjects, ...pastProjects].map((p, idx) => {
-              const isReverse = idx % 2 === 1;
-              const isDarkCover = idx % 2 === 0;
+          <div className="border-[3px] border-black divide-y-[3px] divide-black">
+            {allProjects.map((p, idx) => {
+              const isOpen = openProjectIdx === idx;
+              const isActive = p.status === "active";
               return (
-                <div
-                  key={p.id}
-                  className={["group flex flex-1 min-h-0", isReverse ? "flex-row-reverse" : "flex-row", "hover:bg-black hover:text-white transition-colors"].join(" ")}
-                >
-                  {/* TEXT SIDE — 7/12 — tight so titles fit in flex-1 rows */}
-                  <div className="flex-[7] min-w-0 p-2 lg:p-3 flex flex-col justify-center gap-0.5 border-black group-hover:border-white/15">
-                    <div className="flex items-center gap-1.5">
-                      <span className="font-mono text-[7px] tracking-[0.16em] uppercase border border-black px-1 py-0.5 leading-none group-hover:border-white group-hover:text-white">
-                        {idx < currentProjects.length ? "● Active" : "◆ Archive"}
-                      </span>
-                      <span className="hidden sm:inline font-mono text-[7px] tracking-[0.12em] uppercase opacity-40 group-hover:text-white/50">— {p.id}</span>
-                    </div>
-                    <h3 className="font-display uppercase leading-none tracking-[-0.02em] text-[15px] lg:text-[17px] xl:text-[18px] group-hover:text-white truncate">{p.title}</h3>
-                    <div className="font-mono text-[7px] lg:text-[8px] tracking-[0.12em] uppercase opacity-50 group-hover:text-white/60 truncate">{p.award ?? (idx < currentProjects.length ? "Active build — in production" : "Completed")}</div>
-                    <p className="font-sans text-[10px] lg:text-[11px] leading-[1.35] opacity-55 group-hover:text-white/70 truncate hidden lg:block max-w-[58ch]">{p.description}</p>
-                    <div className="flex items-center justify-between gap-2 pt-1">
-                      <div className="flex flex-wrap gap-1">
-                        {p.tags.slice(0, 4).map((t) => (
-                          <span key={t} className="font-mono text-[7px] lg:text-[8px] tracking-wide border border-black/15 group-hover:border-white/20 px-1 py-0.5 leading-none group-hover:text-white">
-                            {t}
-                          </span>
-                        ))}
-                        {p.tags.length > 4 && <span className="font-mono text-[7px] opacity-40 self-center">+{p.tags.length - 4}</span>}
-                      </div>
-                      <div className="flex items-center gap-1.5 flex-shrink-0">
-                        {p.links.slice(0, 3).map((l) => (
-                          <a
-                            key={l.label}
-                            href={l.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            aria-label={l.label}
-                            title={l.label}
-                            className="w-6 h-6 border-[2px] border-black bg-white text-black flex items-center justify-center hover:bg-black hover:text-white hover:border-black group-hover:border-white group-hover:bg-white group-hover:text-black hover:!bg-black hover:!text-white hover:!border-black transition-colors flex-shrink-0"
-                          >
-                            <PlatformIcon label={l.label} />
-                          </a>
-                        ))}
-                        {!p.links.length && <span className="font-mono text-[7px] uppercase opacity-30 hidden lg:inline border border-black/15 px-1 py-0.5 group-hover:border-white/20 group-hover:text-white">Private</span>}
-                        {p.links[0]?.url ? (
-                          <a href={p.links[0].url} target="_blank" rel="noopener noreferrer" aria-label="Open primary link" className="w-6 h-6 border-[2px] border-black bg-black text-white group-hover:border-white group-hover:bg-white group-hover:text-black hover:!bg-white hover:!text-black flex items-center justify-center text-[10px] leading-none flex-shrink-0 transition-colors">
-                            →
-                          </a>
-                        ) : (
-                          <span className="w-6 h-6 border-[2px] border-black/20 group-hover:border-white/40 flex items-center justify-center text-[10px] leading-none opacity-20 group-hover:opacity-100 flex-shrink-0">→</span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                  {/* COVER SIDE — 5/12, typographic */}
-                  <div
+                <div key={p.id} className="bg-white">
+                  <button
+                    type="button"
+                    onClick={() => setOpenProjectIdx(isOpen ? null : idx)}
+                    aria-expanded={isOpen}
+                    aria-controls={`project-panel-${p.id}`}
                     className={[
-                      "flex flex-[5] relative items-center justify-center overflow-hidden border-black group-hover:border-white/15",
-                      isReverse ? "border-r-[3px]" : "border-l-[3px]",
-                      isDarkCover ? "bg-black text-white" : "bg-white text-black group-hover:!bg-black group-hover:!text-white",
+                      "group w-full text-left flex items-center gap-3 md:gap-4 px-3 md:px-5 py-4 md:py-5 transition-colors",
+                      isOpen ? "bg-black text-white" : "bg-white text-black hover:bg-black hover:text-white",
                     ].join(" ")}
                   >
-                    {/* huge number outline like hero KSHRUGAL — only number in section */}
+                    <span className="font-mono text-[11px] tabular-nums opacity-40 flex-shrink-0 w-5 group-hover:opacity-60">
+                      {String(idx + 1).padStart(2, "0")}
+                    </span>
+
+                    {/* status chip — colour only when the row is at rest, white on inversion */}
                     <span
-                      className="font-display font-black leading-none tracking-[-0.04em] text-[48px] lg:text-[72px] xl:text-[84px] select-none pointer-events-none opacity-[0.95]"
-                      style={{ WebkitTextStroke: "1.4px currentColor", WebkitTextFillColor: "transparent" } as React.CSSProperties}
+                      className={[
+                        "font-mono text-[10px] tracking-[0.12em] uppercase leading-none border-[2px] px-1.5 py-1 flex-shrink-0 whitespace-nowrap transition-colors",
+                        isActive
+                          ? isOpen
+                            ? "border-white text-white bg-black"
+                            : "border-raw-green text-raw-green bg-white group-hover:border-white group-hover:text-white group-hover:bg-black"
+                          : isOpen
+                            ? "border-white text-black bg-white"
+                            : "border-black text-black bg-white group-hover:border-white group-hover:text-white group-hover:bg-black",
+                      ].join(" ")}
+                    >
+                      {isActive ? "● Active" : "◆ Archive"}
+                    </span>
+
+                    <span className="flex-1 min-w-0 flex flex-col md:flex-row md:items-baseline gap-1 md:gap-3">
+                      <h3 className="font-display uppercase leading-none tracking-[-0.02em] text-[17px] md:text-[21px] truncate">{p.title}</h3>
+                      {p.award && (
+                        <span className="hidden md:inline font-mono text-[10px] tracking-[0.1em] uppercase leading-none opacity-50 group-hover:opacity-80 border-l-[2px] border-raw-orange pl-3 truncate max-w-[220px] lg:max-w-[320px]">
+                          {p.award}
+                        </span>
+                      )}
+                    </span>
+
+                    <span className="hidden xl:inline font-mono text-[10px] tracking-[0.08em] uppercase opacity-35 flex-shrink-0 truncate max-w-[260px]">
+                      {p.tags.slice(0, 3).join(" / ")}
+                    </span>
+
+                    <span className="hidden md:inline font-mono text-[10px] tracking-[0.12em] uppercase opacity-30 flex-shrink-0">/{p.id}</span>
+
+                    <span
+                      className={[
+                        "w-8 h-8 border-[2px] flex items-center justify-center flex-shrink-0 text-[12px] transition-transform",
+                        isOpen
+                          ? "border-white bg-white text-black rotate-90"
+                          : "border-black group-hover:border-white group-hover:text-white",
+                      ].join(" ")}
                       aria-hidden
                     >
-                      0{idx + 1}
+                      ▸
                     </span>
-                  </div>
+                  </button>
+
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        key={`panel-${p.id}`}
+                        id={`project-panel-${p.id}`}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                        className="overflow-hidden bg-white text-black"
+                      >
+                        <div className="grid grid-cols-1 lg:grid-cols-12 border-t-[3px] border-black">
+                          {/* left — what it is, the award, the whole stack */}
+                          <div className="lg:col-span-8 p-4 md:p-6 border-b-[3px] lg:border-b-0 lg:border-r-[3px] border-black">
+                            {p.award && (
+                              <div className="border-[3px] border-black mb-5">
+                                <div className="bg-raw-orange text-black px-3 py-1.5 font-mono text-[10px] tracking-[0.16em] uppercase">
+                                  ◆ Award
+                                </div>
+                                <div className="px-3 py-2.5 font-sans text-[13px] font-semibold leading-snug">{p.award}</div>
+                              </div>
+                            )}
+
+                            <div className="font-mono text-[10px] tracking-[0.14em] uppercase opacity-40 mb-2">What it is</div>
+                            <p className="font-sans text-[14px] md:text-[15px] leading-[1.7] max-w-[70ch]">{p.description}</p>
+
+                            <div className="mt-6 pt-4 border-t-[3px] border-black/10">
+                              <div className="font-mono text-[10px] tracking-[0.14em] uppercase opacity-40 mb-3">Stack — {p.tags.length}</div>
+                              <div className="flex flex-wrap gap-1.5">
+                                {p.tags.map((t) => (
+                                  <span
+                                    key={t}
+                                    className="font-mono text-[10px] tracking-[0.08em] uppercase border-[2px] border-black px-2 py-1 bg-white hover:bg-black hover:text-white transition-colors cursor-default"
+                                  >
+                                    {t}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* right — every link, then the record's own metadata */}
+                          <div className="lg:col-span-4 p-4 md:p-6 flex flex-col">
+                            <div className="font-mono text-[10px] tracking-[0.14em] uppercase opacity-40 mb-3">Links — {p.links.length}</div>
+
+                            {p.links.length > 0 ? (
+                              <div className="flex flex-col gap-2">
+                                {p.links.map((l) => (
+                                  <a
+                                    key={l.label}
+                                    href={l.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center justify-between gap-3 border-[3px] border-black px-3 py-2.5 font-mono text-[11px] tracking-[0.1em] uppercase bg-white hover:bg-black hover:text-white transition-colors"
+                                  >
+                                    <span className="flex items-center gap-2.5 min-w-0">
+                                      <span className="flex items-center justify-center w-5 h-5 flex-shrink-0">
+                                        <PlatformIcon label={l.label} />
+                                      </span>
+                                      <span className="truncate">{l.label}</span>
+                                    </span>
+                                    <span className="flex-shrink-0">→</span>
+                                  </a>
+                                ))}
+                              </div>
+                            ) : (
+                              <div className="border-[2px] border-black/25 px-3 py-2 font-mono text-[10px] tracking-[0.12em] uppercase opacity-50 self-start">
+                                Private build — no public links
+                              </div>
+                            )}
+
+                            <div className="mt-auto pt-6">
+                              <div className="font-mono text-[10px] tracking-[0.12em] uppercase opacity-40 leading-loose">
+                                id — {p.id}
+                                <br />
+                                status — {isActive ? "in production" : "shipped"}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               );
             })}
