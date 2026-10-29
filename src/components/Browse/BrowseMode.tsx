@@ -263,6 +263,8 @@ const BrowseMode: React.FC = () => {
               <div className="mt-3 font-mono text-[11px] tracking-[0.18em] uppercase text-white">
                 <span className="text-white">CS @ Georgia Tech</span>
                 <br />
+                <span className="opacity-60">Incoming SWE Intern @ J.B. Hunt — Summer 2027</span>
+                <br />
                 <span className="opacity-60">HackerHouse — S2 Resident</span>
               </div>
             </div>
@@ -429,7 +431,7 @@ const BrowseMode: React.FC = () => {
               <span className="font-mono text-[10px] tracking-[0.18em] uppercase opacity-40">03 — Experience</span>
               <h2 className="font-display text-[22px] md:text-[28px] leading-none tracking-[-0.02em] uppercase">Experience</h2>
             </div>
-            <span className="font-mono text-[10px] tracking-[0.14em] uppercase opacity-50">{experiences.length} roles · 2025 — 2026</span>
+            <span className="font-mono text-[10px] tracking-[0.14em] uppercase opacity-50">{experiences.length} roles · 2025 — 2027</span>
           </div>
 
           <div className="flex flex-wrap items-center justify-between gap-3 mt-3 mb-5">

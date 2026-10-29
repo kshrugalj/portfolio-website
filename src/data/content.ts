@@ -11,8 +11,8 @@ export const profile = {
 
 export const stats = {
   competitions: 10,
-  projects: 5,
-  experiences: 5,
+  projects: 6,
+  experiences: 6,
 };
 
 export interface Project {
@@ -53,6 +53,19 @@ export const currentProjects: Project[] = [
 ];
 
 export const pastProjects: Project[] = [
+  {
+    id: "net0",
+    title: "net0",
+    status: "completed",
+    awards: ["HackGT 13 (2026)"],
+    description:
+      "An off-grid emergency SOS system built at HackGT 13: low-cost ESP32 nodes relay SOS reports over ESP-NOW with no cell service, internet, or app, into a Gemini-powered dispatch dashboard. A phone in Airplane Mode sent an SOS across 7 hops in ~5 seconds, with AI triage, priority clustering, a live map, and two-way messaging back to civilians.",
+    tags: ["C++", "Arduino", "PlatformIO", "ESP32", "ESP-NOW", "Python", "FastAPI", "SQLite", "Gemini", "React", "TypeScript", "Vite", "Leaflet.js", "Tailwind CSS"],
+    links: [
+      { label: "Devpost", url: "https://devpost.com/software/net0" },
+      { label: "GitHub", url: "https://github.com/ishanpatel-16/hackgt-13" },
+    ],
+  },
   {
     id: "recall",
     title: "Recall",
@@ -131,6 +144,16 @@ export interface Experience {
 }
 
 export const experiences: Experience[] = [
+  {
+    title: "Software Engineering Intern (Incoming)",
+    company: "J.B. Hunt Transport Services, Inc.",
+    period: "Summer 2027",
+    description: "Incoming software engineering internship — Summer 2027",
+    link: "https://www.jbhunt.com/",
+    bullets: [
+      "Incoming Software Engineering Intern at J.B. Hunt Transport Services, Inc. for Summer 2027",
+    ],
+  },
   {
     title: "Software Engineer (Contract)",
     company: "Nexor Technologies",
